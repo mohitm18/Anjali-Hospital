@@ -17,26 +17,29 @@ import lombok.Setter;
 @Getter
 public class PatientOPDHistoryResponseDto {
 
-	private Long id;
-	private String seenByDoctor;
-	private DiagnosisResponseDto diagnosis;
-	private String treatment;
-	private String bill;
-	private String billStatus;
-	private String pendingAmount;
-	private PatientResponseDto patient;
-	private int branch;
-	private LocalDate treatmentDate;
-	private String paymentType;
-	
-	private float paidBill;
-	private float totalBillOpd;
-	private float totalPendingBill;
-	private float totalPaidBill;
-	private String Note;
-	
-	@DateTimeFormat( pattern = "yyyy-MM-dd" )
-	private LocalDateTime dateOfTreatment;
-	
-	
-}
+        private Long id;
+        private String seenByDoctor;
+        private DiagnosisResponseDto diagnosis;
+        private String treatment;
+
+        // Change to Double
+        private Double bill;
+        private Double pendingAmount;
+        private Double paidBill; // Changed from float to Double
+
+        private String billStatus;
+        private PatientResponseDto patient;
+        private int branch;
+        private LocalDate treatmentDate;
+        private String paymentType;
+
+        // Financial summaries
+        private Double totalBillOpd;
+        private Double totalPendingBill;
+        private Double totalPaidBill;
+
+        private String note; // Fixed casing from 'Note' to 'note'
+
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDateTime dateOfTreatment;
+    }
