@@ -1,13 +1,11 @@
 package com.spti.service;
-
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import com.spti.dto.patient.PatientOPDHistoryRequestDTO;
 import com.spti.dto.patient.PatientOPDHistoryResponseDto;
 import com.spti.dto.patient.PatientResponseDto;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface OpdPatientHistoryService {
 	public List<PatientOPDHistoryResponseDto> getPatientOpdHistory( Long patientId );
@@ -24,7 +22,7 @@ public interface OpdPatientHistoryService {
 
 	PatientOPDHistoryResponseDto opdPatienBillCashDashbord(String todayrecord);
 
-	public boolean updatePaidBill(PatientOPDHistoryRequestDTO dto);
+    public boolean updatePaidBill(Long id, Double bill, Double paidBill, Double pendingAmount,String paymentType);
 
 	public List<PatientOPDHistoryResponseDto> opdPatientHistory(String disease,  String todayrecord ,String ages);
 	

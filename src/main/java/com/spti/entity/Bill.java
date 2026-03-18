@@ -15,22 +15,23 @@
 //@Setter
 //@Getter
 //@Entity
-//@Table( name = "bills" )
+//@Table(name = "bills")
 //public class Bill {
 //
-//	@Id
-//	@GeneratedValue( strategy = GenerationType.IDENTITY )
-//	private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
 //
-//	@ManyToOne( fetch = FetchType.LAZY )
-//	@JoinColumn( name = "admission_id", referencedColumnName = "admission_id" )
-//	private PatientAdmission patientAdmission;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "admission_id", referencedColumnName = "admission_id")
+//    private PatientAdmission patientAdmission;
 //
-//	private Integer amount;
-//	private Integer discount;
-//	private Integer finalBill;
-//	private Integer paidAmount;
-//	private Integer pendingAmount;
-//	private String status;
+//    // CHANGE Integer → Double
+//    private Double amount;
+//    private Double discount;
+//    private Double finalBill;
+//    private Double paidAmount;
+//    private Double pendingAmount;
 //
+//    private String status;
 //}
