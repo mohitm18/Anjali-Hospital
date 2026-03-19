@@ -2,10 +2,7 @@ package com.spti.controller;
 
 import java.util.Collections;
 import java.util.List;
-
 import javax.validation.Valid;
-
-//import com.spti.dto.patient.BillRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.spti.constants.MessageConstants;
 import com.spti.dto.patient.PatientOPDHistoryRequestDTO;
 import com.spti.dto.patient.PatientOPDHistoryResponseDto;
@@ -35,7 +31,7 @@ public class OpdPatientController {
 		} else {
 			return opdPatientHistorys;
 		}
-	}//new changes on 24 th feb
+	}
     @GetMapping("/patients/{patientId:\\d+}")
     public ResponseEntity<List<PatientOPDHistoryResponseDto>> patientOpdHistory(
             @PathVariable("patientId") Long patientId) {
@@ -44,11 +40,6 @@ public class OpdPatientController {
     }
     @PostMapping("/history")
     public ResponseEntity<String> addOpdHistory(@Valid @RequestBody PatientOPDHistoryRequestDTO dto) {
-        System.out.println("Bill = " + dto.getBill());
-        System.out.println("PaidBill = " + dto.getPaidBill());
-        System.out.println("BillStatus = " + dto.getBillStatus());
-        System.out.println("PaymentType = " + dto.getPaymentType());
-        System.out.println("PendingAmount = " + dto.getPendingAmount());
         boolean isAdded = opdPatientHistoryService.addOpdHistory(dto);
         if (isAdded)
             return ResponseEntity.status(HttpStatus.CREATED)
