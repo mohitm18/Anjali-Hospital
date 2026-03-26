@@ -12,7 +12,6 @@ CREATE TABLE `treatment_details` (
   `payment_mode` varchar(32) DEFAULT NULL,
   `created_by` varchar(32) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  
   PRIMARY KEY (`id`)
 )
 
@@ -25,3 +24,11 @@ alter table hospital.admit_patient add column
  add column `amount_paid` int ,
  add column `amount_tobepaid` int ,
  add column `discharged_at` datetime  NULL
+
+
+ --new variable add patient_opd_history table (paid_bill)
+ --changing datatype of bill and pending_amount
+ ALTER TABLE hospital.patients_opd_history
+ ADD COLUMN paid_bill DOUBLE DEFAULT 0,
+ MODIFY COLUMN bill DOUBLE,
+ MODIFY COLUMN pending_amount DOUBLE;
