@@ -3,7 +3,10 @@ package com.spti.service.impl;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import com.spti.dto.patientStatistics.PatientStatisticsResponseDto;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,13 +58,16 @@ public class OpdPatientHistoryServiceImpl implements OpdPatientHistoryService {
         }
         return opdHistoryMapper.gettoResponseList(opdPatientHistoryRepository.findByTreatmentDateBetweenAndDiagnosisAndAge(startDate, endDate, disease, ages));
     }
+
     @Override
     public List<PatientOPDHistoryResponseDto> getPatientOpdHistory(Long patientId) {
         Optional<Patient> opt = patientRepository.findById(patientId);
         if (opt.isPresent())
             return opdHistoryMapper.toResponseList(opdPatientHistoryRepository.findByPatientOrderByIdDesc(opt.get()));
+
         return null;
     }
+
 //new changes for paid_bill
     @Override
     public boolean addOpdHistory(PatientOPDHistoryRequestDTO dto) {
@@ -84,6 +90,7 @@ public class OpdPatientHistoryServiceImpl implements OpdPatientHistoryService {
         }
         return false;
     }
+
     @Override
     public PatientOPDHistoryResponseDto opdPatienBill(String todayrecord) {
         if (todayrecord.equalsIgnoreCase("Today OpdPatient And Bill")) {
@@ -106,6 +113,7 @@ public class OpdPatientHistoryServiceImpl implements OpdPatientHistoryService {
             return billingUtility.totalBillOfOPDPatient(dtoList);
         }
     }
+
     @Override
     public List<PatientOPDHistoryResponseDto> GetTodayOpdPatient(String todayrecord) {
         if (todayrecord.equalsIgnoreCase("Today OpdPatient And Bill")) {
@@ -127,8 +135,10 @@ public class OpdPatientHistoryServiceImpl implements OpdPatientHistoryService {
             return billingUtility.getPaidBill(opdHistoryMapper.toResponseList(entityPage));
         }
     }
+
     @Override
     public PatientOPDHistoryResponseDto getOpdRecordByid(Long id) {
+
         Optional<PatientOPDHistory> entity = opdPatientHistoryRepository.findById(id);
         PatientOPDHistoryResponseDto dto = opdHistoryMapper.toResponseDTO(entity.get());
         return billingUtility.getPaidBillSingleOpd(dto);
@@ -186,6 +196,32 @@ public class OpdPatientHistoryServiceImpl implements OpdPatientHistoryService {
             List<PatientOPDHistoryResponseDto> dtoList = opdHistoryMapper.toResponseList(entityPage);
             return billingUtility.totalBillOfOPDPatient(dtoList);
         }
+    }
+
+    @Override
+    public List<PatientStatisticsResponseDto> getMonthlyOPDStats() {
+
+        List<PatientOPDHistory> opdHistory = (List<PatientOPDHistory>) opdPatientHistoryRepository.findAll();
+
+        int currentYear = java.time.LocalDate.now().getYear();
+
+        Map<Integer, Long> monthlyCounts = opdHistory.stream()
+                .filter(h -> h.getTreatmentDate() != null)
+                .filter(h -> h.getTreatmentDate().getYear() == currentYear)
+                .collect(Collectors.groupingBy(
+                        h -> h.getTreatmentDate().getMonthValue(),
+                        java.util.stream.Collectors.counting()
+                ));
+
+        List<PatientStatisticsResponseDto> responseList = new java.util.ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            String monthName = java.time.Month.of(i).getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH);
+            Long count = monthlyCounts.getOrDefault(i, 0L);
+
+            responseList.add(new PatientStatisticsResponseDto(monthName, count));
+        }
+
+        return responseList;
     }
 
     @Transactional

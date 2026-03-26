@@ -3,11 +3,11 @@ package com.spti.service.impl;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
+
+import com.spti.dto.patientStatistics.PatientStatisticsResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -145,8 +145,8 @@ public class AdmitPatientServiceImpl implements AdmitPatientService {
 		    	LocalDate date = LocalDate.now();
 		       
 		    	List<AdmitPatient> entityPage = admitPatientRepository.findByAdmissionDateAndAdmitDischargeStatus(date, "Admit");
-		       
 		    	return admitPatientMapper.toResponseList(entityPage);
+
 		    } else if (todayrecord.equalsIgnoreCase("weeklyrecord")) {
 		        LocalDate endDate =LocalDate.now();
 		        LocalDate startDate = endDate.minusDays(7);
@@ -164,14 +164,13 @@ public class AdmitPatientServiceImpl implements AdmitPatientService {
 		        return admitPatientMapper.toResponseList(entityPage);
 		    }
 	}
-     
-	
+
 	@Override
 	public List<AdmitPatientResponseDto> getTodayDischargePatient(String todayrecord) {
 		
 		if (todayrecord.equalsIgnoreCase("Today OpdPatient And Bill")) {
 			LocalDate date = LocalDate.now();
-			List<AdmitPatient> entityPage = admitPatientRepository.findByAdmissionDateAndAdmitDischargeStatus(date,"Discharge");
+			List<AdmitPatient> entityPage = admitPatientRepository.findByDischargedDateAndAdmitDischargeStatus(date,"Discharge");
 			return (admitPatientMapper.toResponseList(entityPage));			
 		}
 		else if (todayrecord.equalsIgnoreCase("weeklyrecord")) {
@@ -231,7 +230,6 @@ public class AdmitPatientServiceImpl implements AdmitPatientService {
 		}
 	}
 
-	
 	@Override
 	public List<AdmitPatientResponseDto> getTodayWeeklyMonthlyDischargePatient(String todayrecord) {
 	    if (todayrecord.equalsIgnoreCase("Today Patient")) {
@@ -254,6 +252,57 @@ public class AdmitPatientServiceImpl implements AdmitPatientService {
 	    }
 	}
 
+  @Override
+public List<PatientStatisticsResponseDto> getMonthlyAdmitStats(){
+
+      List<AdmitPatient>  admitHistory =  admitPatientRepository.findAll();
+
+      int currentYear = java.time.LocalDate.now().getYear();
+
+      Map<Integer, Long> monthlyCounts = admitHistory.stream()
+              .filter(h -> h.getAdmissionDate() != null)
+              .filter(h -> h.getAdmissionDate().getYear() == currentYear)
+              .collect(Collectors.groupingBy(
+                      h -> h.getAdmissionDate().getMonthValue(),
+                      java.util.stream.Collectors.counting()
+              ));
+
+      List<PatientStatisticsResponseDto> responseList = new java.util.ArrayList<>();
+
+      for (int i = 1; i <= 12; i++) {
+          String monthName = java.time.Month.of(i).getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH);
+          Long count = monthlyCounts.getOrDefault(i, 0L);
+
+          responseList.add(new PatientStatisticsResponseDto(monthName, count));
+      }
+
+      return responseList;
+  }
+
+ @Override
+  public  List<PatientStatisticsResponseDto> getMonthlyDischargeStats(){
+     List<AdmitPatient>  dischargeHistory =  admitPatientRepository.findAllDischargePatients();
+     int currentYear = java.time.LocalDate.now().getYear();
+
+     Map<Integer, Long> monthlyCounts = dischargeHistory.stream()
+             .filter(h -> h.getDischargedAt() != null)
+             .filter(h -> h.getDischargedAt().getYear() == currentYear)
+             .collect(Collectors.groupingBy(
+                     h -> h.getDischargedAt().getMonthValue(),
+                     java.util.stream.Collectors.counting()
+             ));
+
+     List<PatientStatisticsResponseDto> responseList = new java.util.ArrayList<>();
+
+     for (int i = 1; i <= 12; i++) {
+         String monthName = java.time.Month.of(i).getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH);
+         Long count = monthlyCounts.getOrDefault(i, 0L);
+
+         responseList.add(new PatientStatisticsResponseDto(monthName, count));
+     }
+
+     return responseList;
+ }
 //	@Override
 //	public List<AdmitPatientResponseDto> getPatientsBetweenStartToEndDates(String todayrecord) {
 //		LocalDate endDate = LocalDate.now().plusDays(1);
@@ -263,8 +312,5 @@ public class AdmitPatientServiceImpl implements AdmitPatientService {
 //        
 //		return admitPatientMapper.toResponseList(entityPage);
 //	}
-
-
-
 
 }

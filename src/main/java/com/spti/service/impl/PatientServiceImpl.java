@@ -18,6 +18,7 @@ import com.spti.entity.Branch;
 import com.spti.entity.Patient;
 import com.spti.mapper.patient.PatientMapper;
 import com.spti.service.PatientService;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -116,6 +117,11 @@ public class PatientServiceImpl implements PatientService {
 		}
 		return null;
 	}
+
+    public Long getAllPatientsCounts(@PathVariable int branchId){
+     return   patientRepository.countByBranchId(branchId);
+
+    }
 			
 	}
 

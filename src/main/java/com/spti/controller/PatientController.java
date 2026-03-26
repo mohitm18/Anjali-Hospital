@@ -81,5 +81,14 @@ public class PatientController {
 
 		return ResponseEntity.status( HttpStatus.OK ).body( patientService.findPatientsByPhoneNumber( branchId, phoneNumber ) );
 
-	}
-}
+	       }
+
+           @GetMapping("/getAllPatientsCounts/{branchId}")
+           public Long getAllPatientsCounts(@PathVariable Integer branchId){
+
+          return patientService.getAllPatientsCounts(branchId);
+
+           }
+
+
+    }

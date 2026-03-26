@@ -1,5 +1,6 @@
 package com.spti.service;
 import java.util.List;
+import com.spti.dto.patientStatistics.PatientStatisticsResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.spti.dto.patient.PatientOPDHistoryRequestDTO;
@@ -25,8 +26,7 @@ public interface OpdPatientHistoryService {
     public boolean updatePaidBill(Long id, Double bill, Double paidBill, Double pendingAmount,String paymentType);
 
 	public List<PatientOPDHistoryResponseDto> opdPatientHistory(String disease,  String todayrecord ,String ages);
-	
 
+    public List <PatientStatisticsResponseDto> getMonthlyOPDStats();
 
-	
 }
