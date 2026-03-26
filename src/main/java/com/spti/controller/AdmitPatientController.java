@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
+
+import com.spti.dto.patientStatistics.PatientStatisticsResponseDto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -122,9 +124,7 @@ public class AdmitPatientController {
 		else
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(admitPatientRandomDates);
 	}
-	
 
-	
 	@GetMapping("/getAllPatient")
 	public ResponseEntity<List<PatientResponseDto>> getAllPatients(){
 		List<PatientResponseDto> patientResponseAllPatients = admitPatientService.findAllPatient();
@@ -161,7 +161,18 @@ public class AdmitPatientController {
 		return  admitPatientService. getTodayWeeklyMonthlyDischargePatient(todayrecord);
 		
 	}
-	
+
+    @GetMapping("/getMonthlyAdmitStats")
+    public List<PatientStatisticsResponseDto> getMonthlyAdmitStats(){
+       // System.out.println("Hello Utkarsh");
+        return admitPatientService.getMonthlyAdmitStats();
+    }
+
+    @GetMapping("/getMonthlyDischargeStats")
+    public List<PatientStatisticsResponseDto> getMonthlyDischargeStat(){
+
+        return admitPatientService.getMonthlyDischargeStats();
+    }
 //	
 //	@GetMapping("/getdataWithStartAndEndDate/{todayrecord}")
 //	public ResponseEntity<List<AdmitPatientResponseDto>> getdataWithStartAndToDates(@PathVariable String todayrecord) {
@@ -171,7 +182,5 @@ public class AdmitPatientController {
 //		else
 //			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(admitPatientRandomDates);
 //	}
-	
-
 
 }

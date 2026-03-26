@@ -3,8 +3,11 @@ package com.spti.service.impl;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.spti.dto.patientStatistics.PatientStatisticsResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +66,9 @@ public class OpdPatientHistoryServiceImpl implements OpdPatientHistoryService {
 	}
 
 
-	@Override
+
+
+    @Override
 	public List<PatientOPDHistoryResponseDto> getPatientOpdHistory(Long patientId) {
 		Optional<Patient> opt = patientRepository.findById(patientId);
 		if (opt.isPresent())
@@ -152,7 +157,7 @@ public class OpdPatientHistoryServiceImpl implements OpdPatientHistoryService {
 			return billingUtility.getPaidBill(opdHistoryMapper.toResponseList(entityPage));
 			
 		}
-		else {
+        else {
 			
 		    LocalDate enddate = LocalDate.now();
 		    LocalDate startDate = enddate.minusDays(30);
@@ -259,5 +264,29 @@ public class OpdPatientHistoryServiceImpl implements OpdPatientHistoryService {
 		}
 		return false;
 	}
+    @Override
+    public List<PatientStatisticsResponseDto> getMonthlyOPDStats() {
 
+        List<PatientOPDHistory> opdHistory=( List<PatientOPDHistory>)opdPatientHistoryRepository.findAll();
+
+        int currentYear = java.time.LocalDate.now().getYear();
+
+        Map<Integer, Long> monthlyCounts = opdHistory.stream()
+                .filter(h -> h.getTreatmentDate() != null)
+                .filter(h -> h.getTreatmentDate().getYear() == currentYear)
+                .collect(Collectors.groupingBy(
+                        h -> h.getTreatmentDate().getMonthValue(),
+                        java.util.stream.Collectors.counting()
+                ));
+
+        List<PatientStatisticsResponseDto> responseList = new java.util.ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            String monthName = java.time.Month.of(i).getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.ENGLISH);
+            Long count = monthlyCounts.getOrDefault(i, 0L);
+
+            responseList.add(new PatientStatisticsResponseDto(monthName, count));
+        }
+
+        return responseList;
+    }
 }

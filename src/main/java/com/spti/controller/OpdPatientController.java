@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.spti.dto.patientStatistics.PatientStatisticsResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -107,7 +108,13 @@ public class OpdPatientController {
 //		
 //		return ResponseEntity.status( HttpStatus.OK ).body( opdPatientHistoryService.opdPatienTotalBill( ) );
 //	}
-	
+
+    @GetMapping("/getMonthlyOPDStats")
+    public List<PatientStatisticsResponseDto>getMonthlyOPDStats(){
+      return  opdPatientHistoryService.getMonthlyOPDStats();
+
+    }
+
 
 }
 

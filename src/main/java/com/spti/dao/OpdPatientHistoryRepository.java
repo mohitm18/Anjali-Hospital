@@ -44,7 +44,7 @@ public interface OpdPatientHistoryRepository extends CrudRepository<PatientOPDHi
 
 	@Query("SELECT poh FROM PatientOPDHistory poh JOIN poh.diagnosis d WHERE poh.treatmentDate BETWEEN :startDate AND :endDate AND d.diagnosis = :disease AND ((:ages = '10to18' AND poh.patient.age BETWEEN 10 AND 18) OR (:ages = 'above18' AND poh.patient.age > 18))")
     List<PatientOPDHistory> findByTreatmentDateBetweenAndDiagnosisAndAge(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, @Param("disease") String disease, @Param("ages") String ages);
-	
-	   
+
+
 
 }

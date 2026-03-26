@@ -47,7 +47,11 @@ public interface AdmitPatientRepository extends JpaRepository<AdmitPatient, Long
     @Query(name = "findByAdmissionDateAndAdmitDischargeStatus", value =  "SELECT a FROM AdmitPatient a WHERE DATE(a.admissionDate) = DATE(:date) AND a.admitDischargeStatus = :status")
     List<AdmitPatient> findByAdmissionDateAndAdmitDischargeStatus(@Param("date") LocalDate date, @Param("status") String status);
 
-    @Query(name = "findAdmitPatientListBetweenAdmissionDateAndAdmitDischargeStatus", value = "SELECT p FROM AdmitPatient p WHERE DATE(p.admissionDate) >= DATE(:startDate) AND DATE(p.admissionDate) < DATE(:endDate) AND p.admitDischargeStatus = :status")
+
+    @Query(name = "findByAdmissionDateAndAdmitDischargeStatus", value =  "SELECT a FROM AdmitPatient a WHERE DATE(a.dischargedAt) = DATE(:date) AND a.admitDischargeStatus = :status")
+    List<AdmitPatient> findByDischargedDateAndAdmitDischargeStatus(@Param("date") LocalDate date, @Param("status") String status);
+
+    @Query(name = "findAdmitPatientListBetweenAdmissionDateAndAdmitDischargeStatus", value = "SELECT p FROM AdmitPatient p WHERE DATE(p.admissionDate) >= DATE(:startDate) AND DATE(p.admissionDate) <= DATE(:endDate) AND p.admitDischargeStatus = :status")
      List<AdmitPatient> findAdmitPatientListBetweenAdmissionDateAndAdmitDischargeStatus(
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,
@@ -66,26 +70,8 @@ public interface AdmitPatientRepository extends JpaRepository<AdmitPatient, Long
 	List<AdmitPatient> findAllAdmit();
 
 	//List<AdmitPatient> findByStartAndEndDate(LocalDate startDate, LocalDate endDate);
-
-
-
-
-
-
-
-
-
-
-
 }
-	
-	
-	
-	
-	
-	
-	
-	
+
 //@Query(value = "SELECT * FROM hospital.admit_patient WHERE admit_date >= :startDate AND admit_date < :endDatePlusOneDay", nativeQuery = true)
 //List<AdmitPatient> findByAdmitDateBetween(@Param("startDate") LocalDate startDate, @Param("endDatePlusOneDay") LocalDate endDatePlusOneDay);	
 
