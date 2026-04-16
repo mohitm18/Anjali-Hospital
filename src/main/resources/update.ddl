@@ -25,3 +25,16 @@ alter table hospital.admit_patient add column
  add column `amount_paid` int ,
  add column `amount_tobepaid` int ,
  add column `discharged_at` datetime  NULL
+
+ alter table hospital.discharge_patient
+ add column consultant VARCHAR(100),
+ add column clinical_History VARCHAR(255),
+ add column bill INT,
+ add column amountPaid BIGINT,
+ add column amounttobePaid BIGINT,
+ add column admitDischargeStatus VARCHAR(255),
+ add column payment_status VARCHAR(255);
+
+ alter table hospital.treatment.details
+  add column amountPaid BIGINT,
+  add column amounttobePaid BIGINT

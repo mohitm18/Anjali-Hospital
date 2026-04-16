@@ -15,4 +15,8 @@ public class TreatmentResponse {
 	private  String billPaid;
 	private String paymentMode;
 
+    private Long paidAmount;
+
+    private Long amounttobePaid;
+
 }

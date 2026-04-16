@@ -29,57 +29,57 @@ import com.spti.service.PatientService;
 @RequestMapping( "/patients" )
 public class PatientController {
 
-	@Autowired
-	private PatientService patientService;
+    @Autowired
+    private PatientService patientService;
 
-	@GetMapping( "/branch/{branchId}" )
-	public ResponseEntity<Page<PatientResponseDto>> getAllPatients( @PathVariable int branchId, @RequestParam int pageNo, Pageable pageable ) {
-		pageable = PageRequest.of( pageNo, 50 );
-		return ResponseEntity.status( HttpStatus.OK ).body( patientService.getAllPatients( branchId, pageable ) );
-	}
-	
-	@GetMapping("/phone/{phoneNumber}")
-	public ResponseEntity<List<PatientResponseDto>> getPatientByPhone(@PathVariable String phoneNumber ){
-		return ResponseEntity.status(HttpStatus.OK).body(patientService.findPatientsByPhoneNumber(phoneNumber));
-		
-	}
+    @GetMapping( "/branch/{branchId}" )
+    public ResponseEntity<Page<PatientResponseDto>> getAllPatients( @PathVariable int branchId, @RequestParam int pageNo, Pageable pageable ) {
+        pageable = PageRequest.of( pageNo, 50 );
+        return ResponseEntity.status( HttpStatus.OK ).body( patientService.getAllPatients( branchId, pageable ) );
+    }
 
-	@GetMapping( "/{id}" )
-	public PatientResponseDto getPatientById( @PathVariable Long id ) {
-		return patientService.getPatientById( id );
-	}
+    @GetMapping("/phone/{phoneNumber}")
+    public ResponseEntity<List<PatientResponseDto>> getPatientByPhone(@PathVariable String phoneNumber ){
+        return ResponseEntity.status(HttpStatus.OK).body(patientService.findPatientsByPhoneNumber(phoneNumber));
 
-	@PostMapping
-	public ResponseEntity<String> createPatient( @Valid @RequestBody PatientRequestDto patientRequestDto ) {
-		boolean isAdded = patientService.addPatient( patientRequestDto );
-		if ( isAdded )
-			return ResponseEntity.status( HttpStatus.CREATED ).body( MessageConstants.ADD_PATIENT_SUCCESS_MESSAGE );
+    }
 
-		else
-			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( MessageConstants.ADD_PATIENT_ERROR_MSG );
+    @GetMapping( "/{id}" )
+    public PatientResponseDto getPatientById( @PathVariable Long id ) {
+        return patientService.getPatientById( id );
+    }
 
-	}
+    @PostMapping
+    public ResponseEntity<String> createPatient( @Valid @RequestBody PatientRequestDto patientRequestDto ) {
+        boolean isAdded = patientService.addPatient( patientRequestDto );
+        if ( isAdded )
+            return ResponseEntity.status( HttpStatus.CREATED ).body( MessageConstants.ADD_PATIENT_SUCCESS_MESSAGE );
 
-	@PutMapping
-	public ResponseEntity<String> updatePatient( @Valid @RequestBody PatientRequestDto patientRequestDto ) {
-		boolean isAdded = patientService.updatePatient( patientRequestDto );
-		if ( isAdded )
-			return ResponseEntity.status( HttpStatus.CREATED ).body( MessageConstants.UPDATE_PATIENT_SUCCESS_MESSAGE );
+        else
+            return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( MessageConstants.ADD_PATIENT_ERROR_MSG );
 
-		else
-			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( MessageConstants.UPDATE_PATIENT_ERROR_MESSAGE );
+    }
 
-	}
+    @PutMapping
+    public ResponseEntity<String> updatePatient( @Valid @RequestBody PatientRequestDto patientRequestDto ) {
+        boolean isAdded = patientService.updatePatient( patientRequestDto );
+        if ( isAdded )
+            return ResponseEntity.status( HttpStatus.CREATED ).body( MessageConstants.UPDATE_PATIENT_SUCCESS_MESSAGE );
 
-	@DeleteMapping( "/{id}" )
-	public void deletePatient( @PathVariable Long id ) {
-		patientService.deletePatient( id );
-	}
+        else
+            return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( MessageConstants.UPDATE_PATIENT_ERROR_MESSAGE );
 
-	@GetMapping( "/branch/{branchId}/phoneNumber/{phoneNumber}" )
-	public ResponseEntity<List<PatientResponseDto>> findPatientsByPhoneNumber( @PathVariable int branchId, @PathVariable String phoneNumber ) {
+    }
 
-		return ResponseEntity.status( HttpStatus.OK ).body( patientService.findPatientsByPhoneNumber( branchId, phoneNumber ) );
+    @DeleteMapping( "/{id}" )
+    public void deletePatient( @PathVariable Long id ) {
+        patientService.deletePatient( id );
+    }
 
-	}
+    @GetMapping( "/branch/{branchId}/phoneNumber/{phoneNumber}" )
+    public ResponseEntity<List<PatientResponseDto>> findPatientsByPhoneNumber( @PathVariable int branchId, @PathVariable String phoneNumber ) {
+
+        return ResponseEntity.status( HttpStatus.OK ).body( patientService.findPatientsByPhoneNumber( branchId, phoneNumber ) );
+
+    }
 }

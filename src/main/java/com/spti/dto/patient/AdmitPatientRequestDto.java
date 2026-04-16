@@ -17,14 +17,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdmitPatientRequestDto {
-
     private long id;
-    
     private String admitDischargeStatus;
-    
-    
     private Long patientId;
-    
-    
     private LocalDateTime admissionDate;
 }

@@ -2,7 +2,7 @@ package com.spti.dao;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalDate;    
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -38,12 +38,12 @@ public interface AdmitPatientRepository extends JpaRepository<AdmitPatient, Long
 
 	@Query(value = "SELECT * FROM hospital.admit_patient WHERE admit_and_discharge_status = 'Admit' AND admit_date >= :startDate AND admit_date < :endDate", nativeQuery = true)
 	List<AdmitPatient> findByAdmitDateBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-	
+
 	@Query(value = "SELECT * FROM hospital.admit_patient WHERE admit_and_discharge_status = 'Admit' AND DATE(admit_date) = :date", nativeQuery = true)
 	List<AdmitPatient> findByPatientTodays(@Param("date") LocalDate date);
 
     // Discharge Query
-    
+
     @Query(name = "findByAdmissionDateAndAdmitDischargeStatus", value =  "SELECT a FROM AdmitPatient a WHERE DATE(a.admissionDate) = DATE(:date) AND a.admitDischargeStatus = :status")
     List<AdmitPatient> findByAdmissionDateAndAdmitDischargeStatus(@Param("date") LocalDate date, @Param("status") String status);
 
@@ -58,10 +58,10 @@ public interface AdmitPatientRepository extends JpaRepository<AdmitPatient, Long
 
     @Query(value = "SELECT * FROM hospital.admit_patient WHERE DATE(discharged_at) = :date AND admit_and_discharge_status = :status", nativeQuery = true)
     List<AdmitPatient> findGetByAdmissionDateAndAdmitDischargeStatus(@Param("date") LocalDate date, @Param("status") String status);
-    
+
     @Query(value = "SELECT * FROM hospital.admit_patient WHERE admit_and_discharge_status = 'Discharge'", nativeQuery = true)
     List<AdmitPatient> findAllDischargePatients();
-   
+
     @Query(value = "SELECT * FROM hospital.admit_patient WHERE admit_and_discharge_status = 'Admit'", nativeQuery = true)
 	List<AdmitPatient> findAllAdmit();
 
@@ -78,23 +78,23 @@ public interface AdmitPatientRepository extends JpaRepository<AdmitPatient, Long
 
 
 }
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 //@Query(value = "SELECT * FROM hospital.admit_patient WHERE admit_date >= :startDate AND admit_date < :endDatePlusOneDay", nativeQuery = true)
-//List<AdmitPatient> findByAdmitDateBetween(@Param("startDate") LocalDate startDate, @Param("endDatePlusOneDay") LocalDate endDatePlusOneDay);	
+//List<AdmitPatient> findByAdmitDateBetween(@Param("startDate") LocalDate startDate, @Param("endDatePlusOneDay") LocalDate endDatePlusOneDay);
 
 //@Query( value = "SELECT * FROM hospital.admit_patient WHERE admit_date =:date", nativeQuery = true)
 //List<AdmitPatient> findByPatientTodays(@Param("date") LocalDate date);
-	
+
 //	@Query(value = "SELECT * FROM hospital.admit_patient WHERE admit_date BETWEEN :startDate AND :endDate", nativeQuery = true)
 //	List<AdmitPatient> findByDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-//   
+//
 //	@Query(value = "SELECT * FROM hospital.admit_patient WHERE WEEK(admit_date, 1) = :week", nativeQuery = true)
 //    List<AdmitPatient> findByAdmitDateYearAndAdmitDateWeek( @Param("week") int week);
 
