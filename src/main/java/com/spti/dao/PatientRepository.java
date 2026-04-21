@@ -17,4 +17,6 @@ public interface PatientRepository extends CrudRepository<Patient, Long> {
 
 	List<Patient> findByPhoneNumber(String phoneNumber);
 
+    Long countByBranchId(int branchId);
+
 }

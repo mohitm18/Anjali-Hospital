@@ -17,20 +17,25 @@ import lombok.Setter;
 @Entity
 @Table( name = "bills" )
 public class Bill {
+
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private Long id;
-    //	@ManyToOne( fetch = FetchType.LAZY )
+
+//	@ManyToOne( fetch = FetchType.LAZY )
 //	@JoinColumn( name = "admission_id", referencedColumnName = "admission_id" )
 //	private PatientAdmission patientAdmission;
-//	private Integer amount;
-//	private Integer discount;
+
+    @ManyToOne
+    @JoinColumn( name = "patient_id" )
+    //@NotEmpty(message = "patient cannot be empty")
+    private Patient patient;
+
+	private Integer amount;
+	private Integer discount;
 	private Integer finalBill;
 	private Integer paidAmount;
 	private Integer pendingAmount;
 	private String status;
-    @ManyToOne
-    @JoinColumn(name="patient_id")
-    private Patient patient;
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.spti.dto.patientStatistics.PatientStatisticsResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +48,8 @@ public interface AdmitPatientService {
 	List<AdmitPatientResponseDto> getTodayWeeklyMonthlyDischargePatient(String todayrecord);
 
 	//List<AdmitPatientResponseDto> getPatientsBetweenStartToEndDates(String todayrecord);
+    List<PatientStatisticsResponseDto> getMonthlyAdmitStats();
+
+    List<PatientStatisticsResponseDto> getMonthlyDischargeStats();
 
 }

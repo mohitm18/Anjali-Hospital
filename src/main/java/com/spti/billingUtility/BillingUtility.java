@@ -1,67 +1,55 @@
 package com.spti.billingUtility;
 
 import java.util.List;
-
 import org.springframework.stereotype.Component;
-
-import com.spti.dto.patient.PatientOPDHistoryRequestDTO;
 import com.spti.dto.patient.PatientOPDHistoryResponseDto;
 
 @Component
 public class BillingUtility {
 
-	
-	public PatientOPDHistoryResponseDto totalBillOfOPDPatient(List<PatientOPDHistoryResponseDto> dtoList) {
-		
-		  float totalBillOpd = 0.0f;
-		  float totalpaidBill = 0.0f;
-		  float totalpendingBill = 0.0f;
-		  
-		  for (PatientOPDHistoryResponseDto dto : dtoList) {
-			  
-			  float totalBill = Float.parseFloat(dto.getBill()); 
-			  float pendingBill =  Float.parseFloat(dto.getPendingAmount());
-			  float paidBill = totalBill - pendingBill;
-			  totalBillOpd = totalBillOpd+Float.parseFloat(dto.getBill());
-			  totalpaidBill = totalpaidBill + paidBill ;
-			  totalpendingBill = totalpendingBill + Float.parseFloat(dto.getPendingAmount());
-		  
-		  } 
-		  
-		  PatientOPDHistoryResponseDto patientOPDHistoryResponseDto = new PatientOPDHistoryResponseDto();
-		  patientOPDHistoryResponseDto.setTotalBillOpd(totalBillOpd);
-		  patientOPDHistoryResponseDto.setTotalPaidBill(totalpaidBill);
-		  patientOPDHistoryResponseDto.setTotalPendingBill(totalpendingBill);  
-		 
-		return patientOPDHistoryResponseDto;
-	}
+    public PatientOPDHistoryResponseDto totalBillOfOPDPatient(List<PatientOPDHistoryResponseDto> dtoList) {
 
-	public List<PatientOPDHistoryResponseDto> getPaidBill(List<PatientOPDHistoryResponseDto> dto) {
-		
-		for(PatientOPDHistoryResponseDto patientOPDHistoryResponseDto : dto) {
-			
-				float totableBill = Float.parseFloat(patientOPDHistoryResponseDto.getBill());
-				float pendingBill = Float.parseFloat(patientOPDHistoryResponseDto.getPendingAmount());
-				float paidBill = totableBill - pendingBill ;
-				
-				patientOPDHistoryResponseDto.setPaidBill(paidBill);			
-				
-			}
-			return dto;
-		
-	}
-	
-	public PatientOPDHistoryResponseDto getPaidBillSingleOpd(PatientOPDHistoryResponseDto dto) {
-		
-				float totableBill = Float.parseFloat(dto.getBill());
-				float pendingBill = Float.parseFloat(dto.getPendingAmount());
-				float paidBill = totableBill - pendingBill ;
-				
-				dto.setPaidBill(paidBill);			
-				
-			return dto;
-		
-	}
+        double totalBillOpd = 0.0;
+        double totalPaidBill = 0.0;
+        double totalPendingBill = 0.0;
 
-	
+        for (PatientOPDHistoryResponseDto dto : dtoList) {
+            // Null safety: default to 0.0 if values are null
+            double bill = (dto.getBill() != null) ? dto.getBill() : 0.0;
+            double pending = (dto.getPendingAmount() != null) ? dto.getPendingAmount() : 0.0;
+            double paid = (dto.getPaidBill() != null) ? dto.getPaidBill() : 0.0;
+
+            totalBillOpd += bill;
+            totalPaidBill += paid;
+            totalPendingBill += pending;
+        }
+
+        PatientOPDHistoryResponseDto summaryDto = new PatientOPDHistoryResponseDto();
+        summaryDto.setTotalBillOpd(totalBillOpd);
+        summaryDto.setTotalPaidBill(totalPaidBill);
+        summaryDto.setTotalPendingBill(totalPendingBill);
+
+        return summaryDto;
+    }
+
+    public List<PatientOPDHistoryResponseDto> getPaidBill(List<PatientOPDHistoryResponseDto> dto) {
+        for(PatientOPDHistoryResponseDto patientDto : dto) {
+            calculatePaidAmount(patientDto);
+        }
+        return dto;
+    }
+
+    public PatientOPDHistoryResponseDto getPaidBillSingleOpd(PatientOPDHistoryResponseDto dto) {
+        return calculatePaidAmount(dto);
+    }
+
+    // Helper method to reduce code duplication
+    private PatientOPDHistoryResponseDto calculatePaidAmount(PatientOPDHistoryResponseDto dto) {
+        double bill = (dto.getBill() != null) ? dto.getBill() : 0.0;
+        double pending = (dto.getPendingAmount() != null) ? dto.getPendingAmount() : 0.0;
+
+        // Logic: Paid = Total - Pending
+        dto.setPaidBill(bill - pending);
+        return dto;
+    }
 }
