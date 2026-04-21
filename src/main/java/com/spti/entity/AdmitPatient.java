@@ -58,7 +58,7 @@ public class AdmitPatient {
 	private Long IPDNo;
 
 	
-	@Column( name = "consultatnt" ) 
+	@Column( name = "consultatnt" )
    //@NotBlank(message = "Consultant cannot be blank")
 	private String consultatnt;
 

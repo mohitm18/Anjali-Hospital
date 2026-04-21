@@ -24,7 +24,6 @@ import lombok.Setter;
 @Setter
 @Table(name = "patients")
 public class Patient {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "patient_id")
@@ -52,14 +51,15 @@ public class Patient {
 
 	@NotNull(message = "Age is mandatory")
 	@Min(value = 0, message = "Age must be greater than or equal to 0")
-	@Max(value = 120, message = "Age must be less than or equal to 120")
+	@Max(value = 100, message = "Age must be less than or equal to 120")
 	@Column(name = "age")
 	private Integer age;
 
-	@NotBlank(message = "Phone number is mandatory")
-	@Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "Phone number isinvalid")
-	@Column(name = "phone_number")
-	private String phoneNumber;
+    @NotBlank(message = "Phone number is mandatory")
+    @Size(min = 10, max = 10, message = "Only 10 digits allowed")
+    @Pattern(regexp = "^[0-9]+$", message = "Phone number must contain digits only")
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
 	@NotBlank(message = "Email is mandatory")
 	@Email(message = "Email should be valid")

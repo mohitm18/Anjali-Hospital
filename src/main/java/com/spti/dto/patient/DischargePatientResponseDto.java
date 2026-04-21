@@ -23,10 +23,12 @@ public class DischargePatientResponseDto {
 	private String diagnosis;
 	private String clinical_History;
 	private Long patientId;
-	
+    private  int bill;
+    private  String paymentStatus;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime dischargeDate;
-	
+
 	private PatientResponseDto patientResponseDto;
 	private AdmitPatientResponseDto admitPatientResponseDto;
 	

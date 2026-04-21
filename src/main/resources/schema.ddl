@@ -105,3 +105,13 @@ CREATE TABLE `treatment_details` (
   
   PRIMARY KEY (`id`)
 )
+CREATE TABLE `hospital`.`bills` (
+   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `final_bill` INT DEFAULT NULL,
+  `paid_amount` INT DEFAULT NULL,
+  `pending_amount` INT DEFAULT NULL,
+  `status` VARCHAR(20) DEFAULT NULL,
+  `patient_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`patient_id`) REFERENCES patients(patient_id)
+);

@@ -1,5 +1,6 @@
 package com.spti.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -13,8 +14,8 @@ public interface DischargePatientRepository extends CrudRepository<DischargePati
 
 //	Optional<DischargePatient> findByPatient_idAndAdmitDischargeStatus(Long patientId, String string);
 
-	
-	
-	
+
+    //List<DischargePatient> findByStatus(String status);
+
 
 }

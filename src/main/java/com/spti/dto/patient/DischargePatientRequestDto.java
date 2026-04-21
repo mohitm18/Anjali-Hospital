@@ -2,6 +2,7 @@ package com.spti.dto.patient;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -30,7 +31,7 @@ public class DischargePatientRequestDto {
 	@Min(value = 1, message = "IPD Number must be a positive number")
 	private Long IPD_No;
 
-	@NotNull(message = "consultatnt Number cannot be null")
+    @NotNull(message = "consultant Number cannot be null")
 	private String consultatnt;
 
 	@NotBlank(message = "Diagnosis cannot be blank")
@@ -43,11 +44,13 @@ public class DischargePatientRequestDto {
 	@NotBlank(message = "Admit Discharge Status cannot be blank")
 	private String admitDischargeStatus;
 
+    private  int bill;
 	@NotNull(message = "Amount paid cannot be null")
 	@Min(value = 0, message = "Amount paid must be zero or a positive number")
 	private Long amountPaid;
 
 	private Long amounttobePaid;
+    private  String paymentStatus;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime dischargedAt;

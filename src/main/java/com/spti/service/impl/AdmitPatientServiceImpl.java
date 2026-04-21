@@ -54,11 +54,17 @@ public class AdmitPatientServiceImpl implements AdmitPatientService {
 	public boolean AdmitPatientAdd( AdmitPatientRequestDto dto) {
 
 		try {
-			AdmitPatient entity = admitPatientMapper.toEntity(dto);
+            Optional<AdmitPatient> existingAdmit =
+                    admitPatientRepository.findByPatient_idAndAdmitDischargeStatus(dto.getPatientId(), "Admit");
 
+            if(existingAdmit.isPresent()) {
+                return false;
+            }
+			AdmitPatient entity = admitPatientMapper.toEntity(dto);
 			Optional<Patient> opt = patientRepository.findById(dto.getPatientId());
 			if (opt.isPresent()) {
 				entity.setPatient(opt.get());
+                entity.setAdmitDischargeStatus("Admit");
 				admitPatientRepository.save(entity);				
 				return true;
 			}

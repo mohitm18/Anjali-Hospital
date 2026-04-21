@@ -22,6 +22,8 @@ public class TreatmentMapper {
 		treatment.setPaymentMode(treatmentRequestdto.getPaymentMode());
 		treatment.setCreatedBy(treatmentRequestdto.getCreatedBy());
 		treatment.setCreatedAt(LocalDateTime.now());
+        treatment.setPaidAmount(treatmentRequestdto.getPaidAmount());
+        treatment.setAmounttobePaid(treatmentRequestdto.getAmounttobePaid());
 		return treatment;
 		
 	}
@@ -34,6 +36,8 @@ public class TreatmentMapper {
 		treatmentResponsedto.setBill(treatment.getBill());
 		treatmentResponsedto.setBillPaid(treatment.getBillPaid());
 		treatmentResponsedto.setPaymentMode(treatment.getPaymentMode());
+        treatmentResponsedto.setPaidAmount(treatment.getPaidAmount());
+        treatmentResponsedto.setAmounttobePaid(treatment.getAmounttobePaid());
 		return treatmentResponsedto;
 		
 	}
