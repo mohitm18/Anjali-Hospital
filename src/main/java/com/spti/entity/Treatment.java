@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -49,5 +50,12 @@ public class Treatment {
 	
 	@Column(name="created_at")
 	private LocalDateTime createdAt;
+
+    @Positive(message = "Amount paid must be a positive number")
+    @Column(name = "amountPaid")
+    private Long paidAmount;
+
+    @Column(name = "amounttobePaid")
+    private Long amounttobePaid;
 
 }

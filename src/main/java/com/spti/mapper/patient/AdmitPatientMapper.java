@@ -18,16 +18,14 @@ import com.spti.entity.PatientOPDHistory;
 
 @Component
 public class AdmitPatientMapper {
-      
-	public AdmitPatient toEntity(AdmitPatientRequestDto dto) {
-		AdmitPatient entity = new AdmitPatient();
-		entity.setId(dto.getId());
-		entity.setAdmitDischargeStatus("Admit");
-		entity.setAdmitDischargeStatus(dto.getAdmitDischargeStatus());
-		entity.setAdmissionDate(dto.getAdmissionDate());
-		return entity;
 
-	}
+    public AdmitPatient toEntity(AdmitPatientRequestDto dto) {
+        AdmitPatient entity = new AdmitPatient();
+        entity.setId(dto.getId());
+        entity.setAdmitDischargeStatus(dto.getAdmitDischargeStatus());
+        entity.setAdmissionDate(dto.getAdmissionDate());
+        return entity;
+    }
 
 	public AdmitPatientResponseDto toDto(AdmitPatient admitPatient) {
 		AdmitPatientResponseDto admitPatientResponseDto = new AdmitPatientResponseDto();

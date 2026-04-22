@@ -8,10 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,23 +32,35 @@ public class DischargePatient {
     @Column(name = "IPD_No")
     private Long IPD_No;
 
-    
-    @Column(name = "consultant")
-    private String consultant;
 
-  //  @NotBlank(message = "Diagnosis cannot be blank")
+    @Column(name = "consultant")
+    private String consultatnt;
+
+    //  @NotBlank(message = "Diagnosis cannot be blank")
     @Column(name = "diagnosis")
     private String diagnosis;
 
     @Column(name = "clinical_History")
-    private String clinicalHistory;
+    private String clinical_History;
+    @Column(name="bill")
+    private  int bill;
 
-    
+    @Positive(message = "Amount paid must be a positive number")
+    @Column(name = "amountPaid")
+    private Long amountPaid;
+
+    @Column(name = "amounttobePaid")
+    private Long amounttobePaid;
+    //@NotBlank(message = "Admit discharge status must not be blank")
+    @Column(name = "admitDischargeStatus")
+    private String admitDischargeStatus;
+    @Column(name="payment_status")
+    private  String paymentStatus;
     @ManyToOne
     @JoinColumn(name = "admit_Patient_id")
     private AdmitPatient admitPatient;
 
-    
+
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
