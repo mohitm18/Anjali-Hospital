@@ -26,4 +26,5 @@ public interface PatientService {
 
     Long getAllPatientsCounts(@PathVariable int branchId);
 
+    Boolean checkExists(String type,String value);
 }
