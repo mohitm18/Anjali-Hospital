@@ -19,4 +19,8 @@ public interface PatientRepository extends CrudRepository<Patient, Long> {
 
     Long countByBranchId(int branchId);
 
+
+     boolean existsByPhoneNumber(String phoneNumber);
+
+    boolean existsByEmail(String email);
 }
