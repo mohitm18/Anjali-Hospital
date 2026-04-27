@@ -122,7 +122,24 @@ public class PatientServiceImpl implements PatientService {
      return   patientRepository.countByBranchId(branchId);
 
     }
-			
+		
+    @Override
+    public Boolean checkExists(String type,String value) {
+
+        switch (type){
+            case "email":
+                return patientRepository.existsByEmail(value);
+
+            case "phone":
+                return patientRepository.existsByPhoneNumber(value);
+
+            default:
+                return false;
+        }
+
+
+    }
+
 	}
 
 
