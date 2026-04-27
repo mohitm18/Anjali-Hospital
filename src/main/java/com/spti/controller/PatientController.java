@@ -89,5 +89,13 @@ public class PatientController {
           return patientService.getAllPatientsCounts(branchId);
 
            }
+   
+    @GetMapping( "/checkExists/{type}/{value}" )
+    public ResponseEntity<Boolean> checkExists( @PathVariable String type,@PathVariable String value ) {
+
+        return ResponseEntity.status( HttpStatus.OK ).body( patientService.checkExists( type,value) );
+
+    }
+
 
     }
