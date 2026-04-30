@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-
 import com.spti.dao.BranchDao;
 import com.spti.dao.PatientRepository;
 import com.spti.dto.patient.PatientRequestDto;
@@ -31,15 +29,15 @@ public class PatientServiceImpl implements PatientService {
 	@Autowired
 	private PatientMapper patientMapper;
 
-	@Override
-	public Page<PatientResponseDto> getAllPatients( int branchId, Pageable pageable ) {
-		Optional<Branch> opt = branchDao.findById( branchId );
-		if ( opt.isPresent() ) {
-			Page<Patient> entityPage = patientRepository.findAllByBranch( opt.get(), pageable );
-			return new PageImpl<>( patientMapper.toList( entityPage.getContent() ), pageable, entityPage.getTotalElements() );
-		}
-		return null;
-	}
+    @Override
+    public Page<PatientResponseDto> getAllPatients( int branchId, Pageable pageable ) {
+        Optional<Branch> opt = branchDao.findById( branchId );
+        if ( opt.isPresent() ) {
+            Page<Patient> entityPage = patientRepository.findAllByBranch( opt.get(), pageable );
+            return new PageImpl<>( patientMapper.toList( entityPage.getContent() ), pageable, entityPage.getTotalElements() );
+        }
+        return null;
+    }
 
 	@Override
 	public PatientResponseDto getPatientById( Long id ) {

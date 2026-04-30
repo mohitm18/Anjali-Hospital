@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.spti.dto.BranchRequestDto;
 import com.spti.dto.BranchResponceDto;
+import com.spti.entity.Branch;
 
 public interface BranchService {
 

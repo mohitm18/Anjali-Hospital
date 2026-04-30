@@ -30,8 +30,10 @@ public interface MessageConstants {
 	String UPDATE_DOCTOR_ERROR_MESSAGE = "Unable To Update Doctor";
 	String ADD_STAFF_SUCCESS_MESSAGE = "Staff Added Successfully";
 	String ADD_STAFF_ERROR_MESSAGE = "Unable To Add Staff";
+    String DELETE_STAFF_SUCCESS_MESSAGE ="Staff Deleted Successfully";
+    String DELETE_STAFF_ERROR_MESSAGE ="Unable To Deleted Staff";
 
-	// PatientAdmission Controller
+    // PatientAdmission Controller
 	String ADD_ADMISSION_SUCCESS_MESSAGE = "Admission Added Successfully";
 	String ADD_ADMISSION_ERROR_MESSAGE = "Unable To Add Admission";
 

@@ -105,3 +105,28 @@ CREATE TABLE `treatment_details` (
   
   PRIMARY KEY (`id`)
 )
+
+CREATE TABLE staff (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    address VARCHAR(255),
+    email VARCHAR(255),
+    experience VARCHAR(255),
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    phone_number VARCHAR(255),
+    role VARCHAR(255),
+    status VARCHAR(255),
+    branch INT,
+    PRIMARY KEY (id),
+
+    -- Optional but recommended constraints
+    UNIQUE (email),
+
+    -- Foreign Key (assuming branch table has id column)
+    CONSTRAINT fk_staff_branch
+    FOREIGN KEY (branch) REFERENCES branch(id)
+);
+
+ALTER TABLE hospital.login
+ADD CONSTRAINT fk_login_staff
+FOREIGN KEY (staff_id) REFERENCES staff(id);

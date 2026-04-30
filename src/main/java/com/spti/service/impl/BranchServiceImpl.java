@@ -24,7 +24,7 @@ public class BranchServiceImpl implements BranchService {
 
 	@Override
 	public BranchRequestDto getById( int id ) {
-		Optional<Branch> opt = branchDao.findById( id );
+		Optional<Branch> opt = branchDao.findById(id);
 		if ( opt.isPresent() ) {
 			Branch branch = opt.get();
 			return new BranchRequestDto( branch.getId(), branch.getName(), branch.getAddress() );

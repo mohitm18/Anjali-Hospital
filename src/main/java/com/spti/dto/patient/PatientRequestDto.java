@@ -50,5 +50,5 @@ public class PatientRequestDto {
     @Email(message = "Email should be valid")
     private String email;
 
-    private int branch;
+    private Integer branch;
 }

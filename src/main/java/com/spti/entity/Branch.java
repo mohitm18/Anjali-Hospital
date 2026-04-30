@@ -1,15 +1,12 @@
 package com.spti.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,15 +14,14 @@ import lombok.NoArgsConstructor;
 @Table( name = "branch" )
 @Entity
 public class Branch {
-
 	@Id
-	@GeneratedValue( strategy = GenerationType.AUTO )
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@Column( name = "id" )
 	private int id;
-
 	@Column( name = "name" )
 	private String name;
-
 	@Column( name = "address" )
 	private String address;
+    @OneToMany(mappedBy = "branch")
+    private List<Staff> staffs;
 }

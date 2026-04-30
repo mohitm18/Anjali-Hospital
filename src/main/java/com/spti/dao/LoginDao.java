@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.spti.entity.Login;
 
-public interface LoginDao extends CrudRepository<Login, Integer> {
+public interface LoginDao extends CrudRepository<Login, Long> {
 
 	Login findByUsername(String username);
 
