@@ -2,6 +2,10 @@ package com.spti.constants;
 
 public interface MessageConstants {
 
+	//Login Message
+	String LOGIN_SUCCESS_MESSAGE = "Login Successful";	
+	String LOGIN_ERROR_MESSAGE = "Invalid Username or Password!";
+
 	// error Message
 	String ERROR_MESSAGE = "Something Went Wrong";
 

@@ -83,11 +83,9 @@ public class PatientController {
 
 	       }
 
-           @GetMapping("/getAllPatientsCounts/{branchId}")
-           public Long getAllPatientsCounts(@PathVariable Integer branchId){
-
-          return patientService.getAllPatientsCounts(branchId);
-
-           }
-
+		   @GetMapping("/getAllPatientsCounts")
+		   public Long getAllPatientsCounts() {
+			   return patientService.getAllPatientsCounts();
+		   }
+		   
     }

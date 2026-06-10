@@ -1,5 +1,7 @@
 package com.spti.dto;
 
+import com.spti.entity.Staff;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +20,6 @@ public class LoginResponceDto {
 	private int branchId;
 	private String branchName;
 	private Long loginId;
+	private Staff staff;
 
 }

@@ -118,11 +118,10 @@ public class PatientServiceImpl implements PatientService {
 		return null;
 	}
 
-    public Long getAllPatientsCounts(@PathVariable int branchId){
-     return   patientRepository.countByBranchId(branchId);
-
-    }
-			
+    @Override
+public Long getAllPatientsCounts() {
+    return patientRepository.count();
+}
 	}
 
 

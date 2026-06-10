@@ -24,6 +24,6 @@ public interface PatientService {
 
 	List<PatientResponseDto> findPatientsByPhoneNumber(String phoneNumber);
 
-    Long getAllPatientsCounts(@PathVariable int branchId);
+	Long getAllPatientsCounts();;
 
 }
