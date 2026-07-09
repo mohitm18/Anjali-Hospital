@@ -184,8 +184,9 @@ public class StaffServiceImpl implements StaffService {
         staff.setExperience(request.getExperience());
 
         if (request.getRoleId() != null) {
-            Role role = new Role();
-            role.setId(request.getRoleId());
+
+            Role role = roleRepository.findById(request.getRoleId())
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
             staff.setRole(role);
         }
 
