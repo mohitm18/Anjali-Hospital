@@ -45,7 +45,6 @@ CREATE TABLE spti.patients (
     patient_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    gender VARCHAR(8),
     date_of_birth TIMESTAMP,
     address VARCHAR(255),
     phone_number VARCHAR(15),
@@ -99,12 +98,11 @@ CREATE TABLE spti.`staff` (
   UNIQUE KEY `email_UNIQUE` (`email`)
 )
 
---
---ALTER TABLE `spti`.`patients` 
---CHANGE COLUMN `date_of_birth` `date_of_birth` TIMESTAMP NULL DEFAULT NULL ,
---CHANGE COLUMN `admission_date` `admission_date` TIMESTAMP NULL DEFAULT NULL ,
---CHANGE COLUMN `discharge_date` `discharge_date` TIMESTAMP NULL DEFAULT NULL ;
---
---
---ALTER TABLE `spti`.`insurance_details` 
---CHANGE COLUMN `expiry_date` `expiry_date` TIMESTAMP NULL DEFAULT NULL ;
+ALTER TABLE `spti`.`patients` 
+CHANGE COLUMN `date_of_birth` `date_of_birth` TIMESTAMP NULL DEFAULT NULL ,
+CHANGE COLUMN `admission_date` `admission_date` TIMESTAMP NULL DEFAULT NULL ,
+CHANGE COLUMN `discharge_date` `discharge_date` TIMESTAMP NULL DEFAULT NULL ;
+
+
+ALTER TABLE `spti`.`insurance_details` 
+CHANGE COLUMN `expiry_date` `expiry_date` TIMESTAMP NULL DEFAULT NULL ;

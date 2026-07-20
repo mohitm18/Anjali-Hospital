@@ -22,7 +22,18 @@ public class PatientMapper {
 		entity.setAddress( requestDto.getAddress() );
 		entity.setAge( requestDto.getAge() );
 		entity.setPhoneNumber( requestDto.getPhoneNumber() );
+		entity.setEmergencyContact(requestDto.getEmergencyContact());
 		entity.setEmail( requestDto.getEmail() );
+		entity.setBloodGroup(requestDto.getBloodGroup());
+		entity.setHeight(requestDto.getHeight());
+		entity.setWeight(requestDto.getWeight());
+		entity.setAllergies(requestDto.getAllergies());
+		entity.setMedicalHistory(requestDto.getMedicalHistory());
+		entity.setMaritalStatus(requestDto.getMaritalStatus());
+		entity.setOccupation(requestDto.getOccupation());
+		entity.setCity(requestDto.getCity());
+		entity.setState(requestDto.getState());
+		entity.setPincode(requestDto.getPincode());
 		return entity;
 	}
 
@@ -36,7 +47,18 @@ public class PatientMapper {
 		dto.setAge(entity.getAge());
 		dto.setAddress( entity.getAddress() );
 		dto.setPhoneNumber( entity.getPhoneNumber() );
-		dto.setEmail( entity.getEmail() );
+		dto.setEmail( entity.getEmail());
+		dto.setEmergencyContact(entity.getEmergencyContact());
+		dto.setBloodGroup(entity.getBloodGroup());
+		dto.setHeight(entity.getHeight()!=null?entity.getHeight():0);
+		dto.setWeight(entity.getWeight()!=null?entity.getWeight():0);
+		dto.setAllergies(entity.getAllergies());	
+		dto.setMedicalHistory(entity.getMedicalHistory());
+		dto.setMaritalStatus(entity.getMaritalStatus());
+		dto.setOccupation(entity.getOccupation());
+		dto.setCity(entity.getCity());
+		dto.setState(entity.getState());
+		dto.setPincode(entity.getPincode());
 		return dto;
 	}
 

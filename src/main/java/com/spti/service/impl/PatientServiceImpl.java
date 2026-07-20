@@ -55,6 +55,7 @@ public class PatientServiceImpl implements PatientService {
 	@Override
 	public boolean addPatient( PatientRequestDto patientRequestDto ) {
 		try {
+			System.out.println( patientRequestDto);
 			Patient patient = patientMapper.toEntity( patientRequestDto );
 			Optional<Branch> opt = branchDao.findById( patientRequestDto.getBranch() );
 			if ( opt.isPresent() ) {
