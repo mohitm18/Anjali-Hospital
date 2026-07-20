@@ -46,6 +46,29 @@ public class PatientRequestDto {
     @Pattern(regexp = "\\d{10}", message = "Phone number must be a valid 10-digit number")
     private String phoneNumber;
 
+    //@Pattern(regexp = "\\d{10}", message = "Phone number must be a valid 10-digit number")
+    private String emergencyContact;
+
+    private String bloodGroup;
+
+    private int height;
+
+    private int weight;
+    
+    private String allergies;
+
+    private String medicalHistory;
+
+    private String maritalStatus;
+
+    private String occupation;
+
+    private String city;
+
+    private String state;
+
+    private String pincode;
+
     @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
     private String email;

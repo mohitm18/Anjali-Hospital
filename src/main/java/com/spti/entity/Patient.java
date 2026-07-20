@@ -49,9 +49,20 @@ public class Patient {
 	@Column(name = "address")
 	private String address;
 
+	@NotBlank(message = "State is mandatory")
+	@Column(name = "state")
+	private String state;
+
+	@NotBlank(message = "City is mandatory")
+	@Column(name = "city")
+	private String city;
+
+	@Column(name = "pincode")
+	private String pincode;
+
 	@NotNull(message = "Age is mandatory")
 	@Min(value = 0, message = "Age must be greater than or equal to 0")
-	@Max(value = 100, message = "Age must be less than or equal to 120")
+	@Max(value = 120, message = "Age must be less than or equal to 120")
 	@Column(name = "age")
 	private Integer age;
 
@@ -61,10 +72,36 @@ public class Patient {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+	//@Size(min=10, max=12, message = "Only 10 to 12 digits allowed")
+	@Column(name = "emergency_contact")
+	private String emergencyContact;
+
 	@NotBlank(message = "Email is mandatory")
 	@Email(message = "Email should be valid")
 	@Column(name = "email")
 	private String email;
+
+	//@NotBlank(message = "Blood group is mandatory")
+	@Column(name = "blood_group")
+	private String bloodGroup;
+
+	@Column(name = "height")
+	private Integer height;
+
+	@Column(name = "weight")
+	private Integer weight;
+
+	@Column(name = "allergies")
+	private String allergies;
+
+	@Column(name = "medical_history")
+	private String medicalHistory;
+
+	@Column(name = "marital_status")
+	private String maritalStatus;
+
+	@Column(name = "occupation")	
+	private String occupation;
 
 	@ManyToOne
 	@JoinColumn(name = "branch")
