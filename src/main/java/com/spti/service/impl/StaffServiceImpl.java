@@ -182,6 +182,7 @@ public class StaffServiceImpl implements StaffService {
         staff.setAddress(request.getAddress());
         staff.setStatus(request.getStatus());
         staff.setExperience(request.getExperience());
+        
 
         if (request.getRoleId() != null) {
 
@@ -192,10 +193,10 @@ public class StaffServiceImpl implements StaffService {
 
         String newPassword = request.getPassword();
         boolean isPasswordUpdated = (newPassword != null && !newPassword.trim().isEmpty());
-
+        String encodedPassword = passwordEncoder.encode(newPassword);
         if (isPasswordUpdated) {
 
-            staff.setPassword(newPassword);
+            staff.setPassword(encodedPassword);
         }
 
         Staff savedStaff = staffRepository.save(staff);
@@ -206,7 +207,7 @@ public class StaffServiceImpl implements StaffService {
             Login login = loginOpt.get();
             login.setUsername(request.getEmail());
             if (isPasswordUpdated) {
-                login.setPassword(newPassword);
+                login.setPassword(encodedPassword);
             }
 
             if (savedStaff.getRole() != null) {
