@@ -190,14 +190,16 @@ public class StaffServiceImpl implements StaffService {
                     .orElseThrow(() -> new RuntimeException("Role not found"));
             staff.setRole(role);
         }
+            String newPassword = request.getPassword();
+            boolean isPasswordUpdated =
+                    newPassword != null && !newPassword.trim().isEmpty();
 
-        String newPassword = request.getPassword();
-        boolean isPasswordUpdated = (newPassword != null && !newPassword.trim().isEmpty());
-        String encodedPassword = passwordEncoder.encode(newPassword);
-        if (isPasswordUpdated) {
+            String encodedPassword = null;
 
-            staff.setPassword(encodedPassword);
-        }
+            if (isPasswordUpdated) {
+                encodedPassword = passwordEncoder.encode(newPassword);
+                staff.setPassword(encodedPassword);
+            }
 
         Staff savedStaff = staffRepository.save(staff);
 
@@ -205,7 +207,9 @@ public class StaffServiceImpl implements StaffService {
 
         if (loginOpt.isPresent()) {
             Login login = loginOpt.get();
-            login.setUsername(request.getEmail());
+
+            login.setUsername(savedStaff.getEmail());
+
             if (isPasswordUpdated) {
                 login.setPassword(encodedPassword);
             }
