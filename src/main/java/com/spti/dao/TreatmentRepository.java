@@ -10,4 +10,6 @@ public interface TreatmentRepository extends CrudRepository<Treatment, Integer> 
 
 	List<Treatment> findAllByAdmittanceId(Long id);
 
+	Treatment findByAdmittanceId(Long id);
+
 }

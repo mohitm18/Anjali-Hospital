@@ -38,6 +38,7 @@ public class PatientMapper {
 	}
 
 	public PatientResponseDto toDto( Patient entity ) {
+
 		PatientResponseDto dto = new PatientResponseDto();
 
 		dto.setId( entity.getId() );
@@ -59,6 +60,7 @@ public class PatientMapper {
 		dto.setCity(entity.getCity());
 		dto.setState(entity.getState());
 		dto.setPincode(entity.getPincode());
+		
 		return dto;
 	}
 
