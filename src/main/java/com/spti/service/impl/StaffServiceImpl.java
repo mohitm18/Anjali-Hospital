@@ -216,4 +216,14 @@ public class StaffServiceImpl implements StaffService {
             loginRepository.save(login);
         }
     }
+
+    @Override
+    public boolean isEmailExists(String email) {
+        return staffRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean isPhoneNoExists(String phoneNumber){
+        return staffRepository.existsByPhoneNumber(phoneNumber);
+    }
 }

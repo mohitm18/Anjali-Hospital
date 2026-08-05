@@ -19,4 +19,8 @@ public interface StaffService {
     void updateStaff(Long id, StaffRequestDto request);
 
     void deleteStaff(Long id);
+
+    boolean isEmailExists(String email);
+     
+    boolean isPhoneNoExists(String phoneNumber);
 }

@@ -56,5 +56,17 @@ public class AdminController {
         return ResponseEntity.ok("Staff Deleted Successfully");
     }
 
+    //frontEnd validation for email exists
+    @GetMapping("/staff/check-email")
+    public ResponseEntity<Boolean> isEmailExists(@RequestParam String email) {
+    boolean exists = staffService.isEmailExists(email);
+    return ResponseEntity.ok(exists);
+}
+
+   @GetMapping("/staff/check-phone")
+   public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber){
+    boolean exists=staffService.isPhoneNoExists(phoneNumber);
+    return ResponseEntity.ok(exists);
+   }
 
 }
