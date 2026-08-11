@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import com.spti.dto.patient.PatientRequestDto;
 import com.spti.dto.patient.PatientResponseDto;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface PatientService {
 	Page<PatientResponseDto> getAllPatients( int branchId, Pageable pageable );
@@ -24,6 +26,11 @@ public interface PatientService {
 
 	List<PatientResponseDto> findPatientsByPhoneNumber(String phoneNumber);
 
-	Long getAllPatientsCounts();;
+	Long getAllPatientsCounts();
+
+	boolean isEmailExists(String email);  //frontEnd validation for email exists
+
+	boolean isPhoneNumberExists(String phoneNumber);
+   
 
 }

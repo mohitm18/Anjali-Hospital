@@ -88,4 +88,17 @@ public class PatientController {
 			   return patientService.getAllPatientsCounts();
 		   }
 		   
+
+     //frontEnd validation for email exists
+    @GetMapping("/check-email")
+    public ResponseEntity<Boolean> isEmailExists(@RequestParam String email) {
+       boolean exists = patientService.isEmailExists(email);
+       return ResponseEntity.ok(exists);
     }
+
+	@GetMapping("/check-phone")
+    public ResponseEntity<Boolean> isPhoneExists(@RequestParam String phoneNumber) {
+        boolean exists = patientService.isPhoneNumberExists(phoneNumber);
+        return ResponseEntity.ok(exists);
+}
+}

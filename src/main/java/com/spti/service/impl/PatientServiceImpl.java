@@ -123,6 +123,18 @@ public class PatientServiceImpl implements PatientService {
 public Long getAllPatientsCounts() {
     return patientRepository.count();
 }
-	}
+
+//already exists new functionality of email and phoneNumber
+@Override
+    public boolean isEmailExists(String email) {
+        return patientRepository.existsByEmail(email);
+    }
+
+@Override
+    public boolean isPhoneNumberExists(String phoneNumber) {
+        return patientRepository.existsByPhoneNumber(phoneNumber);
+    }
+
+}
 
 
