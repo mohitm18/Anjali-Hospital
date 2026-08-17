@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import org.springframework.dao.DataAccessException;
 
 import com.spti.dao.BranchDao;
 import com.spti.dao.PatientRepository;
@@ -123,6 +123,24 @@ public class PatientServiceImpl implements PatientService {
 public Long getAllPatientsCounts() {
     return patientRepository.count();
 }
-	}
 
+//already exists new functionality of email and phoneNumber
+@Override
+public boolean isEmailExists(String email) {
+    try {
+        return patientRepository.existsByEmail(email);
+    } catch (DataAccessException e) {
+        throw new RuntimeException("Unable to check email existence", e);
+    }
+}
+
+@Override
+public boolean isPhoneNumberExists(String phoneNumber) {
+    try {
+        return patientRepository.existsByPhoneNumber(phoneNumber);
+    } catch (DataAccessException e) {
+        throw new RuntimeException("Unable to check phone number existence", e);
+    }
+}
+}
 

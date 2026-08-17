@@ -57,16 +57,23 @@ public class AdminController {
     }
 
     //frontEnd validation for email exists
-    @GetMapping("/staff/check-email")
-    public ResponseEntity<Boolean> isEmailExists(@RequestParam String email) {
-    boolean exists = staffService.isEmailExists(email);
-    return ResponseEntity.ok(exists);
+   @GetMapping("/staff/check-email")
+public ResponseEntity<Boolean> isEmailExists(@RequestParam String email) {
+    try {
+        boolean exists = staffService.isEmailExists(email);
+        return ResponseEntity.ok(exists);
+    } catch (Exception e) {
+        return ResponseEntity.internalServerError().build();
+    }
 }
 
-   @GetMapping("/staff/check-phone")
-   public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber){
-    boolean exists=staffService.isPhoneNoExists(phoneNumber);
-    return ResponseEntity.ok(exists);
-   }
-
+@GetMapping("/staff/check-phone")
+public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber) {
+    try {
+        boolean exists = staffService.isPhoneNoExists(phoneNumber);
+        return ResponseEntity.ok(exists);
+    } catch (Exception e) {
+        return ResponseEntity.internalServerError().build();
+    }
+}
 }
