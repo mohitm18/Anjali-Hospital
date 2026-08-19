@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -226,11 +227,21 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public boolean isEmailExists(String email) {
+        try{
         return staffRepository.existsByEmail(email);
+        }
+        catch(DataAccessException e){
+             throw new RuntimeException("Unable to check phone number existence", e);
+        }
     }
 
     @Override
     public boolean isPhoneNoExists(String phoneNumber){
+        try{
         return staffRepository.existsByPhoneNumber(phoneNumber);
+        }
+        catch(DataAccessException e){
+             throw new RuntimeException("Unable to check phone number existence", e);
+        }
     }
 }

@@ -88,4 +88,25 @@ public class PatientController {
 			   return patientService.getAllPatientsCounts();
 		   }
 		   
+
+    @GetMapping("/check-email")
+    public ResponseEntity<Boolean> isEmailExists(@RequestParam String email) {
+    try {
+        boolean exists = patientService.isEmailExists(email);
+        return ResponseEntity.ok(exists);
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.badRequest().build();
     }
+}
+
+	@GetMapping("/check-phone")
+    public ResponseEntity<Boolean> isPhoneExists(@RequestParam String phoneNumber) {
+		try{
+        boolean exists = patientService.isPhoneNumberExists(phoneNumber);
+        return ResponseEntity.ok(exists);
+		}
+		catch(IllegalArgumentException e){
+			return ResponseEntity.badRequest().build();
+		}
+}
+}
