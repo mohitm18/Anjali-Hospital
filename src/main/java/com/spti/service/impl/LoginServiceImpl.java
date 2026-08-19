@@ -57,7 +57,9 @@ public class LoginServiceImpl implements LoginService {
                 LoginResponceDto temp = loginmapper.toEntity( login );
                 temp.setStatus( "Active" );
                 if (login.getStaff() != null) {
-					temp.setName( login.getStaff().getFirstName() + " " + login.getStaff().getLastName());}
+					temp.setName( login.getStaff().getFirstName() + " " + login.getStaff().getLastName());
+				temp.setStaffId(login.getStaff().getId());
+				}
                 temp.setBranchId( 1 );
                 temp.setBranchName( "Bhadgaon" );
                 return temp;
