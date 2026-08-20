@@ -21,5 +21,5 @@ public class LoginResponceDto {
 	private String branchName;
 	private Long loginId;
 	private Staff staff;
-
+	private Long staffId;
 }

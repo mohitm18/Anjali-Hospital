@@ -181,7 +181,9 @@ public class StaffServiceImpl implements StaffService {
         staff.setPhoneNumber(request.getPhoneNumber());
         staff.setEmail(request.getEmail());
         staff.setAddress(request.getAddress());
-        staff.setStatus(request.getStatus());
+        if(request.getStatus()!=null){
+            staff.setStatus(request.getStatus());
+        }
         staff.setExperience(request.getExperience());
         
 
