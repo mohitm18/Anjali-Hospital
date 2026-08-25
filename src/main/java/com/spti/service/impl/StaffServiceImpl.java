@@ -1,10 +1,13 @@
 package com.spti.service.impl;
 
+import com.spti.dto.staff.ChangePasswordDto;
 import com.spti.dto.staff.StaffRequestDto;
 import com.spti.dto.staff.StaffResponseDto;
 import com.spti.entity.*;
 import com.spti.dao.*;
 import com.spti.service.StaffService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +15,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Service
 public class StaffServiceImpl implements StaffService {
@@ -181,11 +187,10 @@ public class StaffServiceImpl implements StaffService {
         staff.setPhoneNumber(request.getPhoneNumber());
         staff.setEmail(request.getEmail());
         staff.setAddress(request.getAddress());
-        if(request.getStatus()!=null){
+        if (request.getStatus() != null) {
             staff.setStatus(request.getStatus());
         }
         staff.setExperience(request.getExperience());
-        
 
         if (request.getRoleId() != null) {
 
@@ -193,16 +198,15 @@ public class StaffServiceImpl implements StaffService {
                     .orElseThrow(() -> new RuntimeException("Role not found"));
             staff.setRole(role);
         }
-            String newPassword = request.getPassword();
-            boolean isPasswordUpdated =
-                    newPassword != null && !newPassword.trim().isEmpty();
+        String newPassword = request.getPassword();
+        boolean isPasswordUpdated = newPassword != null && !newPassword.trim().isEmpty();
 
-            String encodedPassword = null;
+        String encodedPassword = null;
 
-            if (isPasswordUpdated) {
-                encodedPassword = passwordEncoder.encode(newPassword);
-                staff.setPassword(encodedPassword);
-            }
+        if (isPasswordUpdated) {
+            encodedPassword = passwordEncoder.encode(newPassword);
+            staff.setPassword(encodedPassword);
+        }
 
         Staff savedStaff = staffRepository.save(staff);
 
@@ -227,21 +231,68 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public boolean isEmailExists(String email) {
-        try{
-        return staffRepository.existsByEmail(email);
-        }
-        catch(DataAccessException e){
-             throw new RuntimeException("Unable to check phone number existence", e);
+        try {
+            return staffRepository.existsByEmail(email);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Unable to check phone number existence", e);
         }
     }
 
     @Override
-    public boolean isPhoneNoExists(String phoneNumber){
-        try{
-        return staffRepository.existsByPhoneNumber(phoneNumber);
+    public boolean isPhoneNoExists(String phoneNumber) {
+        try {
+            return staffRepository.existsByPhoneNumber(phoneNumber);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Unable to check phone number existence", e);
         }
-        catch(DataAccessException e){
-             throw new RuntimeException("Unable to check phone number existence", e);
+    }
+
+    @Override
+    @Transactional
+    public void changePassword(Long id,
+            ChangePasswordDto dto) {
+
+        Staff staff = staffRepository.findById(id)
+
+                .orElseThrow(() -> new RuntimeException("Staff not found"));
+
+        if (!passwordEncoder.matches(dto.getOldPassword(),
+
+                staff.getPassword())) {
+
+            throw new RuntimeException("Current Password is incorrect");
+
         }
+
+        if (!dto.getNewPassword()
+
+                .equals(dto.getConfirmNewPassword())) {
+
+            throw new RuntimeException("Passwords do not match");
+
+        }
+
+        String encodedPassword =
+
+                passwordEncoder.encode(dto.getNewPassword());
+
+        staff.setPassword(encodedPassword);
+
+        staffRepository.save(staff);
+
+        Optional<Login> loginOpt =
+
+                loginRepository.findByStaff(staff);
+
+        if (loginOpt.isPresent()) {
+
+            Login login = loginOpt.get();
+
+            login.setPassword(encodedPassword);
+
+            loginRepository.save(login);
+
+        }
+
     }
 }

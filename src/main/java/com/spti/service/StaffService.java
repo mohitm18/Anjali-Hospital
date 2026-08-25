@@ -2,6 +2,7 @@ package com.spti.service;
 
 import java.util.List;
 
+import com.spti.dto.staff.ChangePasswordDto;
 import com.spti.dto.staff.StaffRequestDto;
 import com.spti.dto.staff.StaffResponseDto;
 import com.spti.entity.Role;
@@ -21,6 +22,8 @@ public interface StaffService {
     void deleteStaff(Long id);
 
     boolean isEmailExists(String email);
-     
+
     boolean isPhoneNoExists(String phoneNumber);
+
+    void changePassword(Long id, ChangePasswordDto dto);
 }
