@@ -1,5 +1,6 @@
 package com.spti.controller;
 
+import com.spti.dto.staff.ChangePasswordDto;
 import com.spti.dto.staff.StaffRequestDto;
 import com.spti.dto.staff.StaffResponseDto;
 import com.spti.entity.Role;
@@ -56,24 +57,44 @@ public class AdminController {
         return ResponseEntity.ok("Staff Deleted Successfully");
     }
 
-    //frontEnd validation for email exists
-   @GetMapping("/staff/check-email")
-public ResponseEntity<Boolean> isEmailExists(@RequestParam String email) {
-    try {
-        boolean exists = staffService.isEmailExists(email);
-        return ResponseEntity.ok(exists);
-    } catch (Exception e) {
-        return ResponseEntity.internalServerError().build();
+    // frontEnd validation for email exists
+    @GetMapping("/staff/check-email")
+    public ResponseEntity<Boolean> isEmailExists(@RequestParam String email) {
+        try {
+            boolean exists = staffService.isEmailExists(email);
+            return ResponseEntity.ok(exists);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
-}
 
-@GetMapping("/staff/check-phone")
-public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber) {
-    try {
-        boolean exists = staffService.isPhoneNoExists(phoneNumber);
-        return ResponseEntity.ok(exists);
-    } catch (Exception e) {
-        return ResponseEntity.internalServerError().build();
+    @GetMapping("/staff/check-phone")
+    public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber) {
+        try {
+            boolean exists = staffService.isPhoneNoExists(phoneNumber);
+            return ResponseEntity.ok(exists);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
-}
+
+    @PutMapping("/staff/change-password/{id}")
+    public ResponseEntity<String> changePassword(
+            @PathVariable Long id,
+            @RequestBody ChangePasswordDto dto) {
+
+        try {
+
+            staffService.changePassword(id, dto);
+
+            return ResponseEntity.ok("Password Updated Successfully");
+
+        } catch (RuntimeException e) {
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(e.getMessage());
+
+        }
+    }
 }
