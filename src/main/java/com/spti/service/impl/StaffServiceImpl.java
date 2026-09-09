@@ -242,4 +242,16 @@ public class StaffServiceImpl implements StaffService {
              throw new RuntimeException("Unable to check phone number existence", e);
         }
     }
+     
+    
+@Override
+public List<StaffResponseDto> getActiveDoctors() {
+
+    List<Staff> staffList =
+            staffRepository.findByStatusAndRole_Name("ACTIVE", "DOCTOR");
+
+    return staffList.stream()
+            .map(this::convertToResponseDto)
+            .collect(Collectors.toList());
+}
 }

@@ -21,4 +21,5 @@ public class AdmitPatientRequestDto {
     private String admitDischargeStatus;
     private Long patientId;
     private LocalDateTime admissionDate;
+    private Long doctorId;
 }

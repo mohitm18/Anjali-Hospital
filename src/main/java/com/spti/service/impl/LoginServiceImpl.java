@@ -47,23 +47,42 @@ public class LoginServiceImpl implements LoginService {
 	// }
 
 	@Override
-    public LoginResponceDto login( LoginRequestDto dto ) {
-        // 1. Fakt Username ne record shodha
-        Login login = loginDao.findByUsername( dto.getUsername() );
-        
-        if ( login != null ) {
-            if (passwordEncoder.matches(dto.getPassword(), login.getPassword())) {
-                
-                LoginResponceDto temp = loginmapper.toEntity( login );
-                temp.setStatus( "Active" );
-                if (login.getStaff() != null) {
-					temp.setName( login.getStaff().getFirstName() + " " + login.getStaff().getLastName());}
-                temp.setBranchId( 1 );
-                temp.setBranchName( "Bhadgaon" );
-                return temp;
+public LoginResponceDto login(LoginRequestDto dto) {
+
+    Login login =
+            loginDao.findByUsername(dto.getUsername());
+
+    if (login != null) {
+
+        if (passwordEncoder.matches(
+                dto.getPassword(),
+                login.getPassword())) {
+
+            LoginResponceDto temp =
+                    loginmapper.toEntity(login);
+
+            temp.setStatus("Active");
+
+            if (login.getStaff() != null) {
+
+                temp.setName(
+                        login.getStaff().getFirstName()
+                        + " "
+                        + login.getStaff().getLastName()
+                );
+
+                // IMPORTANT
+                temp.setStaffId(login.getStaff().getId());
             }
+
+            temp.setBranchId(1);
+            temp.setBranchName("Bhadgaon");
+
+            return temp;
         }
-        return null;
     }
+
+    return null;
+}
 
 }

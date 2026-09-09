@@ -85,4 +85,9 @@ public class AdmitPatient {
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime dischargedAt;
 	
+	@ManyToOne
+	@JoinColumn( name = "doctor_id" )
+	//@NotEmpty(message = "patient cannot be empty")
+	private Staff staff;
+
 }

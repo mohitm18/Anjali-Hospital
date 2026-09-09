@@ -67,13 +67,16 @@ public ResponseEntity<Boolean> isEmailExists(@RequestParam String email) {
     }
 }
 
-@GetMapping("/staff/check-phone")
-public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber) {
-    try {
-        boolean exists = staffService.isPhoneNoExists(phoneNumber);
-        return ResponseEntity.ok(exists);
-    } catch (Exception e) {
-        return ResponseEntity.internalServerError().build();
-    }
+   @GetMapping("/staff/check-phone")
+   public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber){
+    boolean exists=staffService.isPhoneNoExists(phoneNumber);
+    return ResponseEntity.ok(exists);
+   }
+
+   //new method for fetching active doctors for 
+   @GetMapping("/staff/active-doctors")
+    public ResponseEntity<List<StaffResponseDto>> getActiveDoctors() {
+    List<StaffResponseDto> doctors =staffService.getActiveDoctors();
+    return ResponseEntity.ok(doctors);
 }
 }

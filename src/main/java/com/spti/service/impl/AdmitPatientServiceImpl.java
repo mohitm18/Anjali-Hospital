@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.spti.dao.AdmitPatientRepository;
 import com.spti.dao.PatientRepository;
+import com.spti.dao.StaffRepository;
 import com.spti.dao.TreatmentRepository;
 import com.spti.dto.patient.AdmitPatientRequestDto;
 import com.spti.dto.patient.AdmitPatientResponseDto;
@@ -27,6 +28,7 @@ import com.spti.entity.AdmitPatient;
 import com.spti.entity.Branch;
 import com.spti.entity.Patient;
 import com.spti.entity.PatientOPDHistory;
+import com.spti.entity.Staff;
 import com.spti.entity.Treatment;
 import com.spti.mapper.patient.AdmitPatientMapper;
 import com.spti.mapper.patient.TreatmentMapper;
@@ -50,30 +52,79 @@ public class AdmitPatientServiceImpl implements AdmitPatientService {
 	@Autowired
 	private TreatmentRepository treatmentRepository;
 
-	@Override  
-	public boolean AdmitPatientAdd( AdmitPatientRequestDto dto) {
+	@Autowired
+	private StaffRepository staffRepository;
 
-		try {
-            Optional<AdmitPatient> existingAdmit =
-                    admitPatientRepository.findByPatient_idAndAdmitDischargeStatus(dto.getPatientId(), "Admit");
+	// @Override  
+	// public boolean AdmitPatientAdd( AdmitPatientRequestDto dto) {
 
-            if(existingAdmit.isPresent()) {
-                return false;
-            }
-			AdmitPatient entity = admitPatientMapper.toEntity(dto);
-			Optional<Patient> opt = patientRepository.findById(dto.getPatientId());
-			if (opt.isPresent()) {
-				entity.setPatient(opt.get());
-                entity.setAdmitDischargeStatus("Admit");
-				admitPatientRepository.save(entity);				
-				return true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	// 	try {
+    //         Optional<AdmitPatient> existingAdmit =
+    //                 admitPatientRepository.findByPatient_idAndAdmitDischargeStatus(dto.getPatientId(), "Admit");
+            
+    //         if(existingAdmit.isPresent()) {
+    //              return false;
+    //          }
+	// 		 AdmitPatient entity = admitPatientMapper.toEntity(dto);
+	// 		Optional<Patient> patientOpt = patientRepository.findById(dto.getPatientId());
+	// 		 if (patientOpt.isPresent()) {
+	// 			return false;
+	// 		// 	entity.setPatient(opt.get());
+    //         //     entity.setAdmitDischargeStatus("Admit");
+	// 		// 	admitPatientRepository.save(entity);				
+	// 		// 	return true;
+	// 		 }
 
-		return false;
-	}
+	// 		 Optional<Staff> staffOpt=StaffRepository.findById(dto.getDoctorId());
+	// 		 if(staffOpt.isPresent()){
+	// 			return false;
+	// 		 }
+	// 	} catch (Exception e) {
+	// 		e.printStackTrace();
+	// 	}
+
+	// 	return false;
+	// }
+@Override
+public boolean AdmitPatientAdd(AdmitPatientRequestDto dto) {
+
+    try {
+
+        Optional<AdmitPatient> existingAdmit =
+                admitPatientRepository
+                .findByPatient_idAndAdmitDischargeStatus(
+                        dto.getPatientId(), "Admit");
+
+        if (existingAdmit.isPresent()) {
+            return false;
+        }
+
+        AdmitPatient entity = admitPatientMapper.toEntity(dto);
+
+        // 1. Find Patient
+        Optional<Patient> patientOpt =patientRepository.findById(dto.getPatientId());
+
+        if (!patientOpt.isPresent()) {
+            return false;
+        }
+
+        // 2. Find Doctor from Staff table
+        Optional<Staff> staffOpt =staffRepository.findById(dto.getDoctorId());
+
+        if (!staffOpt.isPresent()) {
+            return false;
+        }
+        entity.setPatient(patientOpt.get());
+        entity.setStaff(staffOpt.get());
+        entity.setAdmitDischargeStatus("Admit");
+        admitPatientRepository.save(entity);
+        return true;
+    } 
+	catch (Exception e) {
+        e.printStackTrace();
+    }
+    return false;
+}
 
 	@Override
 	public AdmitPatientResponseDto getAdmitPatientBypatienId(Long id) {

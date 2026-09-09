@@ -23,4 +23,8 @@ public interface StaffService {
     boolean isEmailExists(String email);
      
     boolean isPhoneNoExists(String phoneNumber);
+
+    List<StaffResponseDto> getActiveDoctors();
+
+    
 }
