@@ -20,6 +20,6 @@ public class LoginResponceDto {
 	private int branchId;
 	private String branchName;
 	private Long loginId;
+	private Staff staff;
 	private Long staffId;
-
 }
