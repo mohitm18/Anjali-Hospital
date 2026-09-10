@@ -68,33 +68,16 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/staff/check-phone")
-    public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber) {
-        try {
-            boolean exists = staffService.isPhoneNoExists(phoneNumber);
-            return ResponseEntity.ok(exists);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
+   @GetMapping("/staff/check-phone")
+   public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber){
+    boolean exists=staffService.isPhoneNoExists(phoneNumber);
+    return ResponseEntity.ok(exists);
+   }
 
-    @PutMapping("/staff/change-password/{id}")
-    public ResponseEntity<String> changePassword(
-            @PathVariable Long id,
-            @RequestBody ChangePasswordDto dto) {
-
-        try {
-
-            staffService.changePassword(id, dto);
-
-            return ResponseEntity.ok("Password Updated Successfully");
-
-        } catch (RuntimeException e) {
-
-            return ResponseEntity
-                    .badRequest()
-                    .body(e.getMessage());
-
-        }
-    }
+   //new method for fetching active doctors for 
+   @GetMapping("/staff/active-doctors")
+    public ResponseEntity<List<StaffResponseDto>> getActiveDoctors() {
+    List<StaffResponseDto> doctors = staffService.getActiveDoctors();
+    return ResponseEntity.ok(doctors);
+}
 }

@@ -25,5 +25,7 @@ public interface StaffService {
 
     boolean isPhoneNoExists(String phoneNumber);
 
+    List<StaffResponseDto> getActiveDoctors();
+    
     void changePassword(Long id, ChangePasswordDto dto);
 }

@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Component;
-
 import com.spti.dto.patient.AdmitPatientRequestDto;
 import com.spti.dto.patient.AdmitPatientResponseDto;
 import com.spti.dto.patient.PatientOPDHistoryResponseDto;
@@ -33,7 +32,6 @@ public class AdmitPatientMapper {
 		admitPatientResponseDto.setAdmitDischargeStatus(admitPatient.getAdmitDischargeStatus());
 		admitPatientResponseDto.setAdmissionDate(admitPatient.getAdmissionDate());
 		admitPatientResponseDto.setPatient(topatientResponesDto(admitPatient.getPatient()));
-
 		return admitPatientResponseDto;
 	}
 
@@ -48,7 +46,6 @@ public class AdmitPatientMapper {
 		patientResponseDto.setPhoneNumber(patient.getPhoneNumber());
 		patientResponseDto.setId(patient.getId());
 		patientResponseDto.setBranch(patient.getBranch().getId());
-
 		return patientResponseDto;
 	}
 
