@@ -9,6 +9,10 @@ import com.spti.service.StaffService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,9 +36,13 @@ public class AdminController {
     }
 
     @GetMapping("/staff/all")
-    public ResponseEntity<List<StaffResponseDto>> getAllStaff() {
-        List<StaffResponseDto> list = staffService.getAllStaff();
-        return ResponseEntity.ok(list);
+    public ResponseEntity<Page<StaffResponseDto>> getAllStaff(@RequestParam int pageNo, Pageable pageable) {
+
+        pageable = PageRequest.of(pageNo, 50);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(staffService.getAllStaff(pageable));
     }
 
     @GetMapping("/staff/{id}")
@@ -68,16 +76,16 @@ public class AdminController {
         }
     }
 
-   @GetMapping("/staff/check-phone")
-   public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber){
-    boolean exists=staffService.isPhoneNoExists(phoneNumber);
-    return ResponseEntity.ok(exists);
-   }
+    @GetMapping("/staff/check-phone")
+    public ResponseEntity<Boolean> isPhoneNumberExists(@RequestParam String phoneNumber) {
+        boolean exists = staffService.isPhoneNoExists(phoneNumber);
+        return ResponseEntity.ok(exists);
+    }
 
-   //new method for fetching active doctors for 
-   @GetMapping("/staff/active-doctors")
+    // new method for fetching active doctors for
+    @GetMapping("/staff/active-doctors")
     public ResponseEntity<List<StaffResponseDto>> getActiveDoctors() {
-    List<StaffResponseDto> doctors = staffService.getActiveDoctors();
-    return ResponseEntity.ok(doctors);
-}
+        List<StaffResponseDto> doctors = staffService.getActiveDoctors();
+        return ResponseEntity.ok(doctors);
+    }
 }

@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -93,10 +96,10 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public List<StaffResponseDto> getAllStaff() {
-        List<Staff> staffEntities = staffRepository.findAll();
+    public Page<StaffResponseDto> getAllStaff(Pageable pageable) {
+        Page<Staff> staffPage = staffRepository.findAll(pageable);
 
-        return staffEntities.stream().map(staff -> {
+        return staffPage.map(staff -> {
             StaffResponseDto dto = new StaffResponseDto();
             dto.setId(staff.getId());
             dto.setFirstName(staff.getFirstName());
@@ -108,7 +111,7 @@ public class StaffServiceImpl implements StaffService {
             dto.setStatus(staff.getStatus());
             dto.setRole(staff.getRole().getName());
             return dto;
-        }).collect(Collectors.toList());
+        });
     }
 
     @Override
