@@ -2,6 +2,9 @@ package com.spti.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.spti.dto.staff.ChangePasswordDto;
 import com.spti.dto.staff.StaffRequestDto;
 import com.spti.dto.staff.StaffResponseDto;
@@ -13,7 +16,7 @@ public interface StaffService {
 
     List<Role> getAllRoles();
 
-    List<StaffResponseDto> getAllStaff();
+    Page<StaffResponseDto> getAllStaff(Pageable pageable);
 
     StaffResponseDto getStaffById(Long id);
 
