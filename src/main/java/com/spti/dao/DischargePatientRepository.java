@@ -1,12 +1,10 @@
 package com.spti.dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.spti.entity.AdmitPatient;
 import com.spti.entity.DischargePatient;
 
 @Repository
@@ -16,6 +14,8 @@ public interface DischargePatientRepository extends CrudRepository<DischargePati
 
 
     //List<DischargePatient> findByStatus(String status);
+
+    List<DischargePatient> findByPatient_IdOrderByIdDesc( Long patientId );
 
 
 }

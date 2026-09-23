@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spti.constants.MessageConstants;
+import com.spti.dto.patient.DischargePatientResponseDto;
+import com.spti.dto.patient.PatientOPDHistoryResponseDto;
 import com.spti.dto.patient.PatientRequestDto;
 import com.spti.dto.patient.PatientResponseDto;
+import com.spti.dto.treatment.TreatmentResponse;
 import com.spti.service.PatientService;
 
 @RestController
@@ -99,14 +102,42 @@ public class PatientController {
     }
 }
 
-	@GetMapping("/check-phone")
-    public ResponseEntity<Boolean> isPhoneExists(@RequestParam String phoneNumber) {
-		try{
-        boolean exists = patientService.isPhoneNumberExists(phoneNumber);
-        return ResponseEntity.ok(exists);
-		}
-		catch(IllegalArgumentException e){
-			return ResponseEntity.badRequest().build();
-		}
+@GetMapping("/check-phone")
+public ResponseEntity<Boolean> isPhoneExists(@RequestParam String phoneNumber) {
+	try {
+		boolean exists = patientService.isPhoneNumberExists(phoneNumber);
+		return ResponseEntity.ok(exists);
+	} catch (IllegalArgumentException e) {
+		return ResponseEntity.badRequest().build();
+	}
 }
+
+@GetMapping("/opdHistory/{patientId}")
+public ResponseEntity<List<PatientOPDHistoryResponseDto>> getOpdHistory(
+		@PathVariable Long patientId) {
+
+	List<PatientOPDHistoryResponseDto> response = patientService.getOpdHistory(patientId);
+
+	return ResponseEntity.ok(response);
+}
+
+@GetMapping("/treatmentDetails/{patientId}")
+public ResponseEntity<List<TreatmentResponse>> getTreatmentDetails(
+		@PathVariable Long patientId) {
+
+	List<TreatmentResponse> response = patientService.getTreatmentDetails(patientId);
+
+	return ResponseEntity.ok(response);
+}
+
+@GetMapping("/dischargeHistory/{patientId}")
+public ResponseEntity<List<DischargePatientResponseDto>> getDischargeHistory(
+		@PathVariable Long patientId) {
+
+	List<DischargePatientResponseDto> response = patientService.getDischargeHistory(patientId);
+
+	return ResponseEntity.ok(response);
+}
+
+
 }

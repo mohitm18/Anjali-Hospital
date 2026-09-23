@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.spti.entity.Branch;
 import com.spti.entity.Patient;
-import com.spti.entity.Staff;
 
 public interface PatientRepository extends CrudRepository<Patient, Long> {
 

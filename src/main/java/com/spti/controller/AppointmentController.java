@@ -29,13 +29,35 @@ public class AppointmentController {
 	private AppointmentService appointmentService;
 
 	@PostMapping
-	public ResponseEntity<String> addAppointment( @Valid @RequestBody AppointmentRequestDto dto ) {
-		boolean isAdded = appointmentService.addAppointment( dto );
-		if ( isAdded )
-			return ResponseEntity.status( HttpStatus.CREATED ).body( MessageConstants.ADD_APPOINMENT_SUCCESS_MESSAGE );
-		else
-			return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( MessageConstants.ADD_APPOINMENT_ERROR_MESSAGE );
-
+	public ResponseEntity<String> addAppointment(
+			@Valid @RequestBody AppointmentRequestDto dto) {
+	
+		try {
+	
+			boolean isAdded = appointmentService.addAppointment(dto);
+	
+			if (isAdded) {
+				return ResponseEntity
+						.status(HttpStatus.CREATED)
+						.body(MessageConstants.ADD_APPOINMENT_SUCCESS_MESSAGE);
+			}
+	
+			return ResponseEntity
+					.status(HttpStatus.BAD_REQUEST)
+					.body(MessageConstants.ADD_APPOINMENT_ERROR_MESSAGE);
+	
+		} catch (IllegalArgumentException e) {
+	
+			return ResponseEntity
+					.status(HttpStatus.BAD_REQUEST)
+					.body("Invalid appointment details. Please check the provided information.");
+	
+		} catch (Exception e) {
+	
+			return ResponseEntity
+					.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Unable to add appointment right now. Please try again later.");
+		}
 	}
 
 	@GetMapping( "/todays/branch/{branchId}" )
