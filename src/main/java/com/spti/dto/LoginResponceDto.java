@@ -22,4 +22,5 @@ public class LoginResponceDto {
 	private Long loginId;
 	private Staff staff;
 	private Long staffId;
+	private Long patientId;
 }

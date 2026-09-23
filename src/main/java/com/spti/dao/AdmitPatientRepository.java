@@ -1,25 +1,17 @@
 package com.spti.dao;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalDate;    
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.spti.dto.patient.PatientResponseDto;
+
 import com.spti.entity.AdmitPatient;
-import com.spti.entity.PatientOPDHistory;
-import com.spti.entity.Patient;
-import com.spti.entity.PatientOPDHistory;
 
 @Repository
 public interface AdmitPatientRepository extends JpaRepository<AdmitPatient, Long> {
@@ -68,6 +60,8 @@ public interface AdmitPatientRepository extends JpaRepository<AdmitPatient, Long
    
     @Query(value = "SELECT * FROM hospital.admit_patient WHERE admit_and_discharge_status = 'Admit'", nativeQuery = true)
 	List<AdmitPatient> findAllAdmit();
+
+    List<AdmitPatient> findByPatient_IdOrderByAdmissionDateDesc( Long patientId );
 
 	//List<AdmitPatient> findByStartAndEndDate(LocalDate startDate, LocalDate endDate);
 }

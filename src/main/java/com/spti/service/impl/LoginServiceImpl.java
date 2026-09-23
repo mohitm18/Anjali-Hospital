@@ -2,7 +2,7 @@ package com.spti.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.spti.entity.Staff;
+
 import com.spti.dao.LoginDao;
 import com.spti.dto.LoginRequestDto;
 import com.spti.dto.LoginResponceDto;
@@ -47,42 +47,53 @@ public class LoginServiceImpl implements LoginService {
 	// }
 
 	@Override
-public LoginResponceDto login(LoginRequestDto dto) {
-
-    Login login =
-            loginDao.findByUsername(dto.getUsername());
-
-    if (login != null) {
-
-        if (passwordEncoder.matches(
-                dto.getPassword(),
-                login.getPassword())) {
-
-            LoginResponceDto temp =
-                    loginmapper.toEntity(login);
-
-            temp.setStatus("Active");
-
-            if (login.getStaff() != null) {
-
-                temp.setName(
-                        login.getStaff().getFirstName()
-                        + " "
-                        + login.getStaff().getLastName()
-                );
-
-                // IMPORTANT
-                temp.setStaffId(login.getStaff().getId());
-            }
-
-            temp.setBranchId(1);
-            temp.setBranchName("Bhadgaon");
-
-            return temp;
-        }
-    }
-
-    return null;
-}
+	public LoginResponceDto login(LoginRequestDto dto) {
+	
+		Login login = loginDao.findByUsername(dto.getUsername());
+	
+		if (login != null) {
+	
+			if (passwordEncoder.matches(dto.getPassword(), login.getPassword())) {
+	
+				LoginResponceDto temp = loginmapper.toEntity(login);
+				temp.setStatus("Active");
+	
+				// १. जर युझर STAFF असेल तर:
+				if (login.getStaff() != null) {
+					temp.setName(login.getStaff().getFirstName() + " " + login.getStaff().getLastName());
+					temp.setStaffId(login.getStaff().getId());
+					temp.setPatientId(null);
+					
+					// ब्रांच डेटा स्टाफवरून:
+					if (login.getStaff().getBranch() != null) {
+						temp.setBranchId(login.getStaff().getBranch().getId());
+						temp.setBranchName(login.getStaff().getBranch().getName());
+					} else {
+						temp.setBranchId(1);
+						temp.setBranchName("Bhadgaon");
+					}
+				} 
+				// २. जर युझर PATIENT असेल तर:
+				else if (login.getPatient() != null) {
+					temp.setName(login.getPatient().getFirstName() + " " + login.getPatient().getLastName());
+					temp.setPatientId(login.getPatient().getId());
+					temp.setStaffId(null);
+	
+					// ब्रांच डेटा पेशंटवरून:
+					if (login.getPatient().getBranch() != null) {
+						temp.setBranchId(login.getPatient().getBranch().getId());
+						temp.setBranchName(login.getPatient().getBranch().getName());
+					} else {
+						temp.setBranchId(1);
+						temp.setBranchName("Bhadgaon");
+					}
+				}
+	
+				return temp;
+			}
+		}
+	
+		return null;
+	}
 
 }

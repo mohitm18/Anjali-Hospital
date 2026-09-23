@@ -30,6 +30,10 @@ public class Login {
 	@OneToOne
 	@JoinColumn(name = "staff_id")
 	private Staff staff;
+	
+	@OneToOne
+	@JoinColumn(name = "patient_id")
+	private Patient patient;
 
 	public void setUsername(String username) {
 		this.username = username;
@@ -46,4 +50,9 @@ public class Login {
 	public void setStaff(Staff staff) {
 		this.staff = staff;
 	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
 }
